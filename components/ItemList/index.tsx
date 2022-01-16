@@ -5,11 +5,7 @@ import { FC } from "react";
 const ItemList: FC = () => {
   const router = useRouter();
 
-  return (
-    <div className="">
-      <img src="" alt="" />
-    </div>
-  );
+  return <div className=""></div>;
 };
 
 export default ItemList;
