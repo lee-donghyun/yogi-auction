@@ -13,7 +13,11 @@ const Swiper: FC<Props> = ({ images }) => {
     <SwiperContainer loop>
       {images.map((image) => (
         <SwiperSlide key={image}>
-          <img src={image} alt="" className="aspect-square object-contain" />
+          <img
+            src={image}
+            alt=""
+            className="w-full aspect-square object-contain max-h-[calc(100vw-40px)]"
+          />
         </SwiperSlide>
       ))}
     </SwiperContainer>

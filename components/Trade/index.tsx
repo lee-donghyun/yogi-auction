@@ -21,8 +21,8 @@ const Trade: FC<Props> = ({ options, mode }) => {
   const [selected, setSelected] = useState(options[0].id);
 
   return (
-    <div className="p-5">
-      <div className="max-h-[70vh] overflow-y-scroll">
+    <div className="p-5 pb-64">
+      <div>
         {options.map((option) => (
           <Option
             key={option.id}
@@ -32,7 +32,7 @@ const Trade: FC<Props> = ({ options, mode }) => {
           />
         ))}
       </div>
-      <div className="mt-10 flex gap-x-4">
+      <div className="mt-10 flex gap-x-4 fixed inset-x-0 bottom-14 p-5 bg-white border-t">
         <Button>{textsOnMode[mode].place}</Button>
         <Button mode="fill">{textsOnMode[mode].now}</Button>
       </div>
