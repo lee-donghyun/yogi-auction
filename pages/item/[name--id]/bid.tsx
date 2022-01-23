@@ -7,6 +7,7 @@ import type {
 import Link from "next/link";
 import SEO from "../../../components/SEO";
 import Trade from "../../../components/Trade";
+import { getItem } from "../../../services/api";
 
 const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
@@ -40,9 +41,11 @@ export const getStaticProps: GetStaticProps<{
 
   console.log(id);
 
-  const item: Item.Item = await (
-    await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item/${id}`)
-  ).json();
+  // const item: Item.Item = await (
+  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item/${id}`)
+  // ).json();
+
+  const item = getItem(id) as Item.Item;
 
   return {
     props: {
@@ -52,9 +55,9 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  const items: Item.ListItem[] = await (
-    await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
-  ).json();
+  // const items: Item.ListItem[] = await (
+  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
+  // ).json();
 
   return {
     paths: [],

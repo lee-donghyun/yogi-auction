@@ -8,6 +8,7 @@ import Button from "../../../components/Button";
 import Naviagtion from "../../../components/Navigation";
 import SEO from "../../../components/SEO";
 import Swiper from "../../../components/Swiper";
+import { getItem } from "../../../services/api";
 
 const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
@@ -83,9 +84,11 @@ export const getStaticProps: GetStaticProps<{
 
   console.log(id);
 
-  const item: Item.Item = await (
-    await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item/${id}`)
-  ).json();
+  // const item: Item.Item = await (
+  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item/${id}`)
+  // ).json();
+
+  const item = getItem(id);
 
   return {
     props: {
@@ -95,9 +98,9 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  const items: Item.ListItem[] = await (
-    await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
-  ).json();
+  // const items: Item.ListItem[] = await (
+  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
+  // ).json();
 
   return {
     paths: [],
