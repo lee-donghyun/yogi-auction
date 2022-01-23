@@ -7,7 +7,7 @@ const defaultValue = {
       id: "default option id",
       name: "S",
       price: "₩2,000,000",
-      quantity: 1,
+      quantity: 11,
     },
     {
       id: "default option id-1",
@@ -19,13 +19,13 @@ const defaultValue = {
       id: "default option id-0",
       name: "L",
       price: "₩1,800,000",
-      quantity: 1,
+      quantity: 12,
     },
     {
       id: "default option idasdf",
       name: "XL",
       price: "₩1,400,000",
-      quantity: 1,
+      quantity: 2,
     },
   ],
   bid: [

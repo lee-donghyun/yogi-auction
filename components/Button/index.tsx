@@ -1,19 +1,36 @@
+import Link from "next/link";
 import { FC } from "react";
+import { Url, UrlObject } from "url";
 
 type Props = {
   mode?: "outline" | "fill";
   theme?: string;
+  href?: UrlObject | string;
 };
 
-const Button: FC<Props> = ({ mode = "outline", theme, children }) => {
+const Button: FC<Props> = ({ mode = "outline", theme, href, children }) => {
+  const style = `
+        rounded w-full p-4 block text-center
+        ${mode === "outline" && "border border-current"} 
+        ${mode === "fill" && "bg-black border border-black text-white"}
+      `;
+
+  if (href) {
+    return (
+      <Link href={href}>
+        <a
+          className={style}
+          style={{ backgroundColor: theme, borderColor: theme }}
+        >
+          {children}
+        </a>
+      </Link>
+    );
+  }
   return (
     <button
       type="button"
-      className={`
-        rounded w-full p-4
-        ${mode === "outline" && "border border-current"} 
-        ${mode === "fill" && "bg-black border border-black text-white"}
-      `}
+      className={style}
       style={{ backgroundColor: theme, borderColor: theme }}
     >
       {children}

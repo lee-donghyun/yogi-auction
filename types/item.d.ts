@@ -13,6 +13,7 @@ namespace Item {
   };
 
   type Item = {
+    id: string;
     imageList: string[];
     name: string;
     description: string;

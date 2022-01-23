@@ -4,12 +4,12 @@ import type {
   InferGetStaticPropsType,
   NextPage,
 } from "next";
-import Button from "../../components/Button";
-import Naviagtion from "../../components/Navigation";
-import SEO from "../../components/SEO";
-import Swiper from "../../components/Swiper";
+import Button from "../../../components/Button";
+import Naviagtion from "../../../components/Navigation";
+import SEO from "../../../components/SEO";
+import Swiper from "../../../components/Swiper";
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
 }) => {
   return (
@@ -25,7 +25,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </p>
           <div className="mt-4 flex gap-x-4 items-start">
             <div className="w-full">
-              <Button>Ask</Button>
+              <Button href={`/item/${item.name}--${item.id}/ask`}>Ask</Button>
               <div className="mt-3 mr-2">
                 {item.ask.slice(0, 3).map((ask) => (
                   <p
@@ -38,7 +38,9 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </div>
             </div>
             <div className="w-full">
-              <Button mode="fill">Bid</Button>
+              <Button mode="fill" href={`/item/${item.name}--${item.id}/bid`}>
+                Bid
+              </Button>
               <div className="mt-3 mr-2">
                 {item.bid.slice(0, 3).map((bid) => (
                   <p
@@ -71,7 +73,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 };
 
-export default Home;
+export default ItemDetail;
 
 export const getStaticProps: GetStaticProps<{
   item: Item.Item;
