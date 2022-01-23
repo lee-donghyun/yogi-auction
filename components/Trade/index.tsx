@@ -21,7 +21,7 @@ const Trade: FC<Props> = ({ options, mode }) => {
   const [selected, setSelected] = useState(options[0].id);
 
   return (
-    <div className="p-5 pb-64">
+    <div className="p-5 pb-64 min-h-screen">
       <div>
         {options.map((option) => (
           <Option
