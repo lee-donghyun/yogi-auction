@@ -1,36 +1,31 @@
-type ListItem = {
-  image: {
-    gallery: string[];
-    thumbnail: string;
+namespace Item {
+  type ListItem = {
+    image: string;
+    name: string;
+    lowestAsk: string;
+    id: string;
   };
-  name: string;
-  lowestAsk: number;
-};
 
-type List = {
-  page: number;
-  totalPage: number;
-  items: ListItem[];
-};
-
-type Item = {
-  image: {
-    gallery: string[];
-    thumbnail: string;
+  type List = {
+    page: number;
+    totalPage: number;
+    items: ListItem[];
   };
-  name: string;
-  description: string;
-  ask: {
-    option: Option;
-    price: number;
-  }[];
-  bid: {
-    option: Option;
+
+  type Item = {
+    imageList: string[];
+    name: string;
+    description: string;
+    ask: Option[];
+    bid: Option[];
+    lastSalePrice: string;
+    lowestAsk: string;
+  };
+
+  type Option = {
+    id: string;
+    name: string;
     price: string;
-  }[];
-};
-
-type Option = {
-  name: string;
-  id: string;
-};
+    quantity: number;
+  };
+}

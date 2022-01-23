@@ -7,7 +7,7 @@ const Naviagtion: FC = () => {
   const router = useRouter();
 
   return (
-    <div className="fixed inset-0 top-auto h-14 bg-white border-t-2 border-black flex text-3xl justify-between items-center">
+    <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black flex text-3xl justify-between items-center">
       <Link href="/">
         <a
           className={`ml-5 ${
@@ -23,6 +23,8 @@ const Naviagtion: FC = () => {
         <Link href="/search">
           <a className="mr-5">
             <VscSearch
+              strokeWidth={0.5}
+              color="white"
               className={
                 router.pathname === "/search"
                   ? "fill-black"

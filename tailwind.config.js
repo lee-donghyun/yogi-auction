@@ -9,6 +9,8 @@ module.exports = {
         'sans': ['Noto Serif KR']
       },
     },
-    plugins: [],
-  }
+  },
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 }
