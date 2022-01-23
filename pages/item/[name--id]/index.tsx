@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<{
   console.log(id);
 
   const item: Item.Item = await (
-    await fetch(`${process.env.VERCEL_URL}/api/item/${id}`)
+    await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item/${id}`)
   ).json();
 
   return {
@@ -96,7 +96,7 @@ export const getStaticProps: GetStaticProps<{
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
   const items: Item.ListItem[] = await (
-    await fetch(`${process.env.VERCEL_URL}/api/item`)
+    await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
   ).json();
 
   return {
