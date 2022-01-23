@@ -20,7 +20,7 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <div>
         <Trade options={item.ask} mode="ask" />
         <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
-          <Link href={`/item/${item.name}--${item.id}`}>
+          <Link href={`/item/${item.name}--${item.id}`} replace>
             <a className="ml-5 h-full w-fit flex items-center">
               <span>{`< ${item.name}`}</span>
             </a>

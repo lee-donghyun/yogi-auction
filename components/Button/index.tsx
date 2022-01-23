@@ -6,9 +6,16 @@ type Props = {
   mode?: "outline" | "fill";
   theme?: string;
   href?: UrlObject | string;
+  replace?: boolean;
 };
 
-const Button: FC<Props> = ({ mode = "outline", theme, href, children }) => {
+const Button: FC<Props> = ({
+  mode = "outline",
+  theme,
+  href,
+  children,
+  replace,
+}) => {
   const style = `
         rounded w-full p-4 block text-center
         ${mode === "outline" && "border border-current"} 
@@ -17,7 +24,7 @@ const Button: FC<Props> = ({ mode = "outline", theme, href, children }) => {
 
   if (href) {
     return (
-      <Link href={href}>
+      <Link href={href} replace={replace}>
         <a
           className={style}
           style={{ backgroundColor: theme, borderColor: theme }}

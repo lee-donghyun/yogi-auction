@@ -26,7 +26,9 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </p>
           <div className="mt-4 flex gap-x-4 items-start">
             <div className="w-full">
-              <Button href={`/item/${item.name}--${item.id}/ask`}>Ask</Button>
+              <Button href={`/item/${item.name}--${item.id}/ask`} replace>
+                Ask
+              </Button>
               <div className="mt-3 mr-2">
                 {item.ask.slice(0, 3).map((ask) => (
                   <p
@@ -39,7 +41,11 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </div>
             </div>
             <div className="w-full">
-              <Button mode="fill" href={`/item/${item.name}--${item.id}/bid`}>
+              <Button
+                mode="fill"
+                href={`/item/${item.name}--${item.id}/bid`}
+                replace
+              >
                 Bid
               </Button>
               <div className="mt-3 mr-2">
