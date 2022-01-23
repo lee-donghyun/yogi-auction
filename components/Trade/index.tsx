@@ -25,6 +25,7 @@ const Trade: FC<Props> = ({ options, mode }) => {
       <div className="max-h-[70vh] overflow-y-scroll">
         {options.map((option) => (
           <Option
+            key={option.id}
             option={option}
             isActive={option.id === selected}
             onClick={setSelected}
