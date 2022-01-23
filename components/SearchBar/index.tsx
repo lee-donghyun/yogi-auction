@@ -9,7 +9,7 @@ const SearchBar: FC<{
   return (
     <form
       onSubmit={onSubmit}
-      className="fixed bottom-[68px] left-3 right-3 p-1 text-base bg-white border-2 border-black justify-between"
+      className="fixed bottom-[68px] left-3 right-3 p-1 text-base bg-white border border-black justify-between"
       style={{
         animationName: "fade-in",
         animationDuration: "0.3s",

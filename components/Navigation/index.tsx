@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { VscSearch, VscPerson } from "react-icons/vsc";
+import { VscSearch } from "react-icons/vsc";
 
 const Naviagtion: FC = () => {
   const router = useRouter();

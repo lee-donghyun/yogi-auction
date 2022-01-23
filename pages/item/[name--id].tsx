@@ -18,7 +18,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <div>
         <div className="mt-5 p-5">
           <Swiper images={item.imageList} />
-          <h1 className="text-2xl mt-9">{item.name}</h1>
+          <h1 className="font-semibold text-2xl mt-9">{item.name}</h1>
           <p className="text-lg mt-1">
             {item.lowestAsk}
             <span className="text-xs"> (lowest ask)</span>
@@ -28,7 +28,10 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               <Button>Ask</Button>
               <div className="mt-3 mr-2">
                 {item.ask.slice(0, 3).map((ask) => (
-                  <p className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px">
+                  <p
+                    className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
+                    key={ask.id}
+                  >
                     {ask.name} - {ask.price}
                   </p>
                 ))}
@@ -38,7 +41,10 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               <Button mode="fill">Bid</Button>
               <div className="mt-3 mr-2">
                 {item.bid.slice(0, 3).map((bid) => (
-                  <p className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px">
+                  <p
+                    className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
+                    key={bid.id}
+                  >
                     {bid.name} - {bid.price}
                   </p>
                 ))}
@@ -76,7 +82,7 @@ export const getStaticProps: GetStaticProps<{
   console.log(id);
 
   const item: Item.Item = await (
-    await fetch(`http://localhost:3000/api/item/${id}`)
+    await fetch(`${process.env.VERCEL_URL}/api/item/${id}`)
   ).json();
 
   return {
@@ -88,7 +94,7 @@ export const getStaticProps: GetStaticProps<{
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
   const items: Item.ListItem[] = await (
-    await fetch(`http://localhost:3000/api/item`)
+    await fetch(`${process.env.VERCEL_URL}/api/item`)
   ).json();
 
   return {
