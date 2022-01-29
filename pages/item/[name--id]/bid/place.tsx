@@ -33,7 +33,7 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   return (
     <>
       <SEO title={item.name} />
-      <div>
+      <div className="pb-64 min-h-screen">
         <div className="p-5">
           <h1 className="text-xl">{item.name}</h1>
           <p className="text mt-1">{optionName}</p>
