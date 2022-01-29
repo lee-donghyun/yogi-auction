@@ -5,11 +5,12 @@ import type {
   NextPage,
 } from "next";
 import Link from "next/link";
-import SEO from "../../../components/SEO";
-import Trade from "../../../components/Trade";
-import { getItem } from "../../../services/api";
+import Button from "../../../../components/Button";
+import SEO from "../../../../components/SEO";
+import Trade from "../../../../components/Trade";
+import { getItem } from "../../../../services/api";
 
-const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
 }) => {
   console.log(item);
@@ -18,7 +19,29 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     <>
       <SEO title={item.name} />
       <div>
-        <Trade options={item.ask} mode="ask" />
+        <Trade
+          options={item.bid}
+          render={({ selected }) => (
+            <>
+              <Button
+                href={{
+                  pathname: `/item/${item.name}--${item.id}/bid/place`,
+                  query: { option: selected },
+                }}
+              >
+                Place Bid
+              </Button>
+              <Button
+                href={{
+                  pathname: `/checkout`,
+                }}
+                mode="fill"
+              >
+                Buy Now
+              </Button>
+            </>
+          )}
+        />
         <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
           <Link href={`/item/${item.name}--${item.id}`} replace>
             <a className="ml-5 h-full w-fit flex items-center">
@@ -31,7 +54,7 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 };
 
-export default Ask;
+export default Bid;
 
 export const getStaticProps: GetStaticProps<{
   item: Item.Item;

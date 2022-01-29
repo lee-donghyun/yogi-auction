@@ -1,23 +1,11 @@
 import { FC, useState } from "react";
-import Button from "../Button";
-
-const textsOnMode = {
-  ask: {
-    place: "Place Ask",
-    now: "Sell Now",
-  },
-  bid: {
-    place: "Place Bid",
-    now: "Buy Now",
-  },
-};
 
 type Props = {
   options: Item.Option[];
-  mode: "ask" | "bid";
+  render: FC<{ selected: string }>;
 };
 
-const Trade: FC<Props> = ({ options, mode }) => {
+const Trade: FC<Props> = ({ options, render: Footer }) => {
   const [selected, setSelected] = useState(options[0].id);
 
   return (
@@ -33,8 +21,7 @@ const Trade: FC<Props> = ({ options, mode }) => {
         ))}
       </div>
       <div className="mt-10 flex gap-x-4 fixed inset-x-0 bottom-14 p-5 bg-white border-t">
-        <Button>{textsOnMode[mode].place}</Button>
-        <Button mode="fill">{textsOnMode[mode].now}</Button>
+        <Footer selected={selected} />
       </div>
     </div>
   );
@@ -63,7 +50,7 @@ const Option: FC<{
         <p>{option.price}</p>
       </div>
     </div>
-    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-red-600">
+    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-600">
       {option.quantity === 1 && "마지막 수량"}
     </span>
   </button>
