@@ -67,7 +67,7 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 <Button
                   submit
                   mode="fill"
-                  theme={isValid ? undefined : "#e5e7eb"}
+                  theme={isValid ? undefined : "#ebebeb"}
                 >
                   Place Bid
                 </Button>
@@ -76,7 +76,10 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </form>
         </div>
         <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
-          <Link href={`/item/${item.id}/bid`} replace>
+          <Link
+            href={{ pathname: `/item/${item.id}/bid`, query: { option } }}
+            replace
+          >
             <a className="ml-5 h-full w-fit flex items-center">
               <span>{`< 옵션 선택`}</span>
             </a>

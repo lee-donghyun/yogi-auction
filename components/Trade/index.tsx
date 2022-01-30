@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { FC, useState } from "react";
 
 type Props = {
@@ -6,7 +7,10 @@ type Props = {
 };
 
 const Trade: FC<Props> = ({ options, render: Footer }) => {
-  const [selected, setSelected] = useState(options[0].id);
+  const { asPath } = useRouter();
+  const [selected, setSelected] = useState(
+    new URLSearchParams(asPath.split("?")[1]).get("option") ?? options[0].id
+  );
 
   return (
     <div className="p-5 pb-64 min-h-screen">
