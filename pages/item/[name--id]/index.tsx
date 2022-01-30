@@ -15,7 +15,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <>
-      <SEO title={item.name} />
+      <SEO title={item.name} image={item.imageList[0]} />
       <div>
         <div className="mt-5 p-5">
           <Swiper images={item.imageList} />
