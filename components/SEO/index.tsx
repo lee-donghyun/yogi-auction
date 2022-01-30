@@ -9,11 +9,7 @@ const SEO: FC<Props> = ({ title, image, description }) => {
   return (
     <Head>
       <title>{title}</title>
-      <link
-        rel="shortcut icon"
-        href="/images/assets/favicon.ico"
-        type="image/x-icon"
-      />
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
@@ -72,19 +68,19 @@ const SEO: FC<Props> = ({ title, image, description }) => {
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/images/assets/brand.png"
+        href="/images/assets/favicon-96x96.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="96x96"
-        href="/images/assets/brand.png"
+        href="/images/assets/favicon-96x96.png"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/images/assets/brand.png"
+        href="/images/assets/favicon-96x96.png"
       />
       <link rel="manifest" href="/images/assets/manifest.json" />
       <meta name="theme-color" content="#ffffff" />
