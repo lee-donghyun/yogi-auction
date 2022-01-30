@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { FC } from "react";
 
-const ItemList: FC<{ itemList: Item.List }> = ({ itemList }) => {
+const ItemList: FC<{ items: Item.ListItem[] }> = ({ items }) => {
   return (
     <div className="">
       <div className="mt-5">
         <div className="grid grid-cols-2 px-5 gap-x-3 gap-y-8">
-          {itemList.items.map((item) => (
+          {items.map((item) => (
             <Item item={item} key={item.id} />
           ))}
         </div>

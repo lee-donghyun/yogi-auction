@@ -10,6 +10,7 @@ namespace Item {
     page: number;
     totalPage: number;
     items: ListItem[];
+    count: number;
   };
 
   type Item = {

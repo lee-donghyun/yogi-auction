@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC } from "react";
-import { VscSearch } from "react-icons/vsc";
+import { VscMenu, VscSearch } from "react-icons/vsc";
 
 const Naviagtion: FC = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const Naviagtion: FC = () => {
       <Link href="/">
         <a
           className={`ml-5 ${
-            router.pathname !== "/search"
+            router.pathname !== "/search" && router.pathname !== "/menu"
               ? "text-black"
               : "text-gray-300 hover:text-black"
           }`}
@@ -20,7 +20,25 @@ const Naviagtion: FC = () => {
         </a>
       </Link>
       <div className="flex justify-between items-center">
-        <Link href="/search">
+        <Link href="/menu">
+          <a className="mr-2">
+            <VscMenu
+              strokeWidth={0.5}
+              color="white"
+              className={
+                router.pathname === "/menu"
+                  ? "fill-black"
+                  : "fill-gray-300 hover:fill-black"
+              }
+            />
+          </a>
+        </Link>
+        <Link
+          href={{
+            pathname: "/search",
+            query: { ...(router.pathname === "/search" && router.query) },
+          }}
+        >
           <a className="mr-5">
             <VscSearch
               strokeWidth={0.5}

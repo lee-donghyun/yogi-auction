@@ -10,3 +10,7 @@
     opacity: 1;
   }
 }
+
+input[list]::-webkit-calendar-picker-indicator {
+  display: none !important;
+}

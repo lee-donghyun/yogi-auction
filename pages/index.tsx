@@ -8,13 +8,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <SEO />
-      <ItemList
-        itemList={{
-          page: 0,
-          totalPage: 0,
-          items,
-        }}
-      />
+      <ItemList items={items} />
       <Naviagtion />
     </div>
   );

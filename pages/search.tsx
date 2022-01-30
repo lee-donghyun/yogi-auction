@@ -1,49 +1,50 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { DebounceInput } from "react-debounce-input";
+import { VscSearch } from "react-icons/vsc";
+import ItemList from "../components/ItemList";
+import ItemListEmpty from "../components/ItemList/empty";
+import ItemListSkeleton from "../components/ItemList/skeleton";
 import Naviagtion from "../components/Navigation";
-import SearchBar from "../components/SearchBar";
+import SearchInput from "../components/SearchInput";
+import SEO from "../components/SEO";
+import { useObserver } from "../services/hooks/useObserver";
+import useSearch from "../services/hooks/useSearch";
 
 const Search: NextPage = () => {
-  const { data, ...searchBarProps } = useSearch();
+  const data = useSearch();
+  const {
+    items,
+    recommends,
+    query,
+    onChange,
+    onSubmit,
+    isLoading,
+    isEmpty,
+    loadMore,
+  } = data;
+
+  const observer = useObserver(loadMore);
+
+  const router = useRouter();
+
   return (
     <div>
+      <SEO />
       <div>
-        <h1>Search Results</h1>
+        <SearchInput {...data} />
+        <div className="py-[86px] min-h-screen">
+          {items.length > 0 && <ItemList items={items} />}
+          {isLoading && <ItemListSkeleton />}
+          {(router.asPath === "/search" ||
+            router.query.q === "" ||
+            isEmpty) && <ItemListEmpty />}
+          <div ref={observer} className="translate-y-[-80vh]" />
+        </div>
       </div>
-      <SearchBar {...searchBarProps} />
       <Naviagtion />
     </div>
   );
 };
 
 export default Search;
-
-const useSearch = () => {
-  const router = useRouter();
-  const sp = new URLSearchParams(router.asPath.split("?")?.[1]);
-  const [query, setQuery] = useState<string>(sp?.get("q") ?? "");
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const onChange = (e: any) => setQuery(e.target.value);
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-    router.push({ pathname: "/search", query: { ...router.query, q: query } });
-  };
-  useEffect(() => {
-    if (typeof router.query.q === "string") {
-      setIsLoading(true);
-      getItem(router.query.q)
-        .then((res) => {
-          setData(res);
-        })
-        .finally(() => setIsLoading(false));
-    }
-  }, [router.query.q]);
-
-  return { data, query, onChange, onSubmit };
-};
-
-const getItem = async (query: string) => {
-  return [];
-};
