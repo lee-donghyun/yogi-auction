@@ -10,7 +10,7 @@ import SEO from "../../../../components/SEO";
 import Trade from "../../../../components/Trade";
 import { getItem } from "../../../../services/api";
 
-const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
 }) => {
   console.log(item);
@@ -20,32 +20,30 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <SEO title={item.name} />
       <div>
         <Trade
-          options={item.ask}
+          options={item.bid}
           render={({ selected }) => (
             <>
               <Button
                 href={{
-                  pathname: `/item/${item.name}--${item.id}/ask/place`,
+                  pathname: `/item/${item.id}/bid/place`,
                   query: { option: selected },
                 }}
-                replace
               >
-                Place Ask
+                Place Bid
               </Button>
               <Button
                 href={{
-                  // 회원이 아니면 로그인 페이지, 맞으면 마이 페이지 내 진행 중 거래 페이지.
                   pathname: `/checkout`,
                 }}
                 mode="fill"
               >
-                Sell Now
+                Buy Now
               </Button>
             </>
           )}
         />
         <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
-          <Link href={`/item/${item.name}--${item.id}`} replace>
+          <Link href={`/item/${item.id}`} replace>
             <a className="ml-5 h-full w-fit flex items-center">
               <span>{`< ${item.name}`}</span>
             </a>
@@ -56,13 +54,13 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 };
 
-export default Ask;
+export default Bid;
 
 export const getStaticProps: GetStaticProps<{
   item: Item.Item;
 }> = async (context) => {
   console.log(context.params);
-  const [name, id] = (context?.params?.["name--id"] + "")?.split("--") ?? [];
+  const id = context?.params?.id + "";
 
   console.log(id);
 

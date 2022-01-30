@@ -21,7 +21,7 @@ const Item: FC<{ item: Item.ListItem }> = ({ item }) => {
   return (
     <>
       <div className="relative w-full">
-        <Link href={`/item/${item.name}--${item.id}`}>
+        <Link href={`/item/${item.id}`}>
           <a>
             <div>
               <img

@@ -11,24 +11,24 @@ import SEO from "../../../../components/SEO";
 import { getItem } from "../../../../services/api";
 import useForm from "../../../../services/hooks/useForm";
 
-const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+const PlaceAsk: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
 }) => {
   const router = useRouter();
 
   const { data, onChange, onSubmit, isLoading, isValid } = useForm(
     {
-      bidPrice: 0,
+      askPrice: 0,
     },
     async (data) => {
-      // 회원이 아니면 회원 가입 시킴, 회원이면 결제 페이지로 이동
-      router.push("/checkout");
+      // 회원이 아니면 회원 가입 시킴, 회원이면 정보 입력 페이지로 이동. 이미 정보가 입력 되어있으면 완료 페이지로 이동.
+      router.push("/member");
     },
-    (data) => !!data.bidPrice
+    (data) => !!data.askPrice
   );
 
   const { option } = router.query;
-  const optionName = item.bid.find((bidOption) => bidOption.id == option)?.name;
+  const optionName = item.ask.find((askOption) => askOption.id == option)?.name;
 
   return (
     <>
@@ -42,19 +42,19 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <form onSubmit={onSubmit} autoComplete="off">
             <div>
               <div>
-                <label htmlFor="bid-price">구매 희망가</label>
+                <label htmlFor="ask-price">판매 희망가</label>
               </div>
               <div className="relative mt-2">
                 <span className="absolute left-2 top-1/2 -translate-y-1/2">
                   ₩
                 </span>
                 <input
-                  id="bid-price"
+                  id="ask-price"
                   value={
-                    data.bidPrice ? Number(data.bidPrice).toLocaleString() : ""
+                    data.askPrice ? Number(data.askPrice).toLocaleString() : ""
                   }
                   onChange={onChange}
-                  name="bidPrice"
+                  name="askPrice"
                   type="text"
                   data-format="comma"
                   data-type="number"
@@ -69,14 +69,14 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   mode="fill"
                   theme={isValid ? undefined : "#e5e7eb"}
                 >
-                  Place Bid
+                  Place Ask
                 </Button>
               </div>
             </div>
           </form>
         </div>
         <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
-          <Link href={`/item/${item.name}--${item.id}/bid`} replace>
+          <Link href={`/item/${item.id}/ask`} replace>
             <a className="ml-5 h-full w-fit flex items-center">
               <span>{`< 옵션 선택`}</span>
             </a>
@@ -87,13 +87,13 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 };
 
-export default PlaceBid;
+export default PlaceAsk;
 
 export const getStaticProps: GetStaticProps<{
   item: Item.Item;
 }> = async (context) => {
   console.log(context.params);
-  const [name, id] = (context?.params?.["name--id"] + "")?.split("--") ?? [];
+  const id = context?.params?.id + "";
 
   console.log(id);
 

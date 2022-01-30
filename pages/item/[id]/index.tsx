@@ -26,7 +26,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           </p>
           <div className="mt-4 flex gap-x-4 items-start">
             <div className="w-full">
-              <Button href={`/item/${item.name}--${item.id}/ask`} replace>
+              <Button href={`/item/${item.id}/ask`} replace>
                 Ask
               </Button>
               <div className="mt-3 mr-2">
@@ -41,11 +41,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </div>
             </div>
             <div className="w-full">
-              <Button
-                mode="fill"
-                href={`/item/${item.name}--${item.id}/bid`}
-                replace
-              >
+              <Button mode="fill" href={`/item/${item.id}/bid`} replace>
                 Bid
               </Button>
               <div className="mt-3 mr-2">
@@ -86,7 +82,7 @@ export const getStaticProps: GetStaticProps<{
   item: Item.Item;
 }> = async (context) => {
   console.log(context.params);
-  const [name, id] = (context?.params?.["name--id"] + "")?.split("--") ?? [];
+  const id = context?.params?.id + "";
 
   console.log(id);
 
