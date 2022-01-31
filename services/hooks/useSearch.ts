@@ -29,6 +29,7 @@ const useSearch = (): UseSearch => {
   const onChange = (e: any) => setQuery(e.target.value);
   const onSubmit = (e: any) => {
     e.preventDefault();
+    e.target[0].blur();
     router.push({
       pathname: "/search",
       query: { ...router.query, q: query, n: Date.now() },
@@ -42,7 +43,7 @@ const useSearch = (): UseSearch => {
     if (page >= totalPage) {
       return;
     }
-    if (typeof router.query.q === "string" && !!router.query?.q) {
+    if (typeof router.query.q === "string") {
       setIsLoading(true);
       getItem(router.query.q, page + 1)
         .then((res) => {
