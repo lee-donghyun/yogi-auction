@@ -14,3 +14,6 @@
 input[list]::-webkit-calendar-picker-indicator {
   display: none !important;
 }
+input[list]::-webkit-list-button {
+  display: none !important;
+}
