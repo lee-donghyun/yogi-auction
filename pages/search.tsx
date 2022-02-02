@@ -1,6 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { VscClose } from "react-icons/vsc";
 import ItemList from "../components/ItemList";
 import ItemListEmpty from "../components/ItemList/empty";
 import ItemListSkeleton from "../components/ItemList/skeleton";
@@ -9,7 +7,6 @@ import SearchInput from "../components/SearchInput";
 import SEO from "../components/SEO";
 import { useObserver } from "../services/hooks/useObserver";
 import useSearch from "../services/hooks/useSearch";
-import useStorage from "../services/hooks/useStorage";
 
 const Search: NextPage = () => {
   const search = useSearch();

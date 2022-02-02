@@ -7,7 +7,10 @@ const Naviagtion: FC = () => {
   const router = useRouter();
 
   return (
-    <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black flex text-3xl justify-between items-center">
+    <div
+      className="fixed inset-x-0 top-auto h-14 bg-white border-t border-black flex text-3xl justify-between items-center"
+      style={{ bottom: "env(safe-area-inset-bottom)" }}
+    >
       <Link href="/">
         <a
           className={`ml-5 ${

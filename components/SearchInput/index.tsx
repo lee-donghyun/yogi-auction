@@ -44,7 +44,7 @@ const SearchInput: FC<UseSearch> = ({
           <p className="text-lg font-semibold">최근 검색어</p>
           <ul className="mt-2 space-y-1">
             {recentKeywords?.map((keyword) => (
-              <li>
+              <li key={keyword}>
                 <div className="flex justify-between">
                   <button
                     onClick={() => {
