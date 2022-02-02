@@ -77,7 +77,7 @@ const PlaceAsk: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </div>
           </form>
         </div>
-        <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
+        <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
           <Link
             href={{ pathname: `/item/${item.id}/ask`, query: { option } }}
             replace

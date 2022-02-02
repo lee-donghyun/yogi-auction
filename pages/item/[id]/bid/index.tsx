@@ -42,7 +42,7 @@ const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             </>
           )}
         />
-        <div className="fixed inset-0 top-auto h-14 bg-white border-t border-black">
+        <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
           <Link href={`/item/${item.id}`} replace>
             <a className="ml-5 h-full w-fit flex items-center">
               <span>{`< ${item.name}`}</span>
