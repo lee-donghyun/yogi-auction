@@ -8,8 +8,12 @@ const Naviagtion: FC = () => {
 
   return (
     <div
-      className="fixed inset-x-0 top-auto h-14 bg-white border-t border-black flex text-3xl justify-between items-center"
-      style={{ bottom: "env(safe-area-inset-bottom)" }}
+      className={`
+        fixed inset-0 top-auto h-[56px+env(safe-area-inset-bottom)] pb-[env(safe-area-inset-bottom)] 
+      bg-white border-t border-black 
+        flex justify-between items-center 
+        text-3xl 
+      `}
     >
       <Link href="/">
         <a

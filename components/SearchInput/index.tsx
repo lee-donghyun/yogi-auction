@@ -20,7 +20,8 @@ const SearchInput: FC<UseSearch> = ({
       <form onSubmit={onSubmit}>
         <div className="relative mt-1">
           <DebounceInput
-            type="text"
+            type="search"
+            inputMode="search"
             className="border rounded w-full p-2 bg-white"
             value={query}
             onChange={onChange}
