@@ -11,9 +11,12 @@
   }
 }
 
-input[list]::-webkit-calendar-picker-indicator {
+input::-webkit-calendar-picker-indicator {
   display: none !important;
 }
-input[list]::-webkit-list-button {
+input::-webkit-list-button {
   display: none !important;
+}
+input[type="search"] {
+  -webkit-appearance: none;
 }
