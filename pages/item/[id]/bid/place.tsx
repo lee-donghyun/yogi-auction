@@ -39,7 +39,7 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <p className="text mt-1">{optionName}</p>
         </div>
         <div className="p-5">
-          <form onSubmit={onSubmit} autoComplete="off">
+          <form onSubmit={onSubmit} autoComplete="off" noValidate>
             <div>
               <div>
                 <label htmlFor="bid-price">구매 희망가</label>
