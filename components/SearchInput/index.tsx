@@ -1,6 +1,7 @@
+import { useRouter } from "next/router";
 import { FC } from "react";
 import { DebounceInput } from "react-debounce-input";
-import { VscSearch } from "react-icons/vsc";
+import { VscClose, VscSearch } from "react-icons/vsc";
 import { UseSearch } from "../../services/hooks/useSearch";
 
 const SearchInput: FC<UseSearch> = ({
@@ -8,7 +9,12 @@ const SearchInput: FC<UseSearch> = ({
   query,
   onChange,
   onSubmit,
+  useRecentKeywords,
 }) => {
+  const router = useRouter();
+
+  const [recentKeywords, setRecentKeywords] = useRecentKeywords;
+
   return (
     <div className="p-5 fixed inset-0 bottom-auto z-10">
       <form onSubmit={onSubmit}>
@@ -33,6 +39,38 @@ const SearchInput: FC<UseSearch> = ({
           </button>
         </div>
       </form>
+      {(!router.query.q || !query) && (
+        <div className="py-5 mt-5 bg-white">
+          <p className="text-lg font-semibold">최근 검색어</p>
+          <ul className="mt-2 space-y-1">
+            {recentKeywords?.map((keyword) => (
+              <li>
+                <div className="flex justify-between">
+                  <button
+                    onClick={() => {
+                      onChange({ target: { value: keyword } });
+                      router.replace({
+                        pathname: "/search",
+                        query: { q: keyword, n: Date.now() },
+                      });
+                    }}
+                  >
+                    {keyword}
+                  </button>
+                  <button>
+                    <VscClose
+                      onClick={() => setRecentKeywords(keyword, false)}
+                    />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {!recentKeywords?.length && (
+            <p className="text-gray-300">최근 검색어가 없습니다.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

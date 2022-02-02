@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { items as serverItems } from "../../data/items";
+import useStorage from "./useStorage";
 
 export type UseSearch = {
   items: Item.ListItem[];
@@ -11,10 +12,15 @@ export type UseSearch = {
   isLoading: boolean;
   isEmpty: boolean;
   loadMore: () => void;
+  useRecentKeywords: [
+    string[] | undefined,
+    (keyword: string, contain?: boolean) => void
+  ];
 };
 
 const useSearch = (): UseSearch => {
   const router = useRouter();
+  const [selector, dispatch] = useStorage<{ recentKeywords: string[] }>();
 
   const sp = new URLSearchParams(router.asPath.split("?")?.[1]);
   const [query, setQuery] = useState<string>(sp?.get("q") ?? "");
@@ -25,6 +31,15 @@ const useSearch = (): UseSearch => {
   const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+
+  const recentKeywords = selector("recentKeywords");
+  const dispatchRecentKeywords = (keyword: string, contain: boolean = true) =>
+    dispatch({
+      recentKeywords: [
+        ...(contain ? [keyword] : []),
+        ...(recentKeywords ?? []).filter((_keyword) => keyword !== _keyword),
+      ],
+    });
 
   const onChange = (e: any) => setQuery(e.target.value);
   const onSubmit = (e: any) => {
@@ -60,6 +75,7 @@ const useSearch = (): UseSearch => {
       return;
     }
     if (typeof router.query.q === "string" && !!router.query?.q) {
+      dispatchRecentKeywords(query);
       setIsLoading(true);
       setIsEmpty(false);
       setItems([]);
@@ -91,6 +107,7 @@ const useSearch = (): UseSearch => {
     isLoading,
     isEmpty,
     loadMore,
+    useRecentKeywords: [recentKeywords, dispatchRecentKeywords],
   };
 };
 
