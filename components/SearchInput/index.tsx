@@ -29,22 +29,25 @@ const SearchInput: FC<UseSearch> = ({
         }}
       >
         <div className="relative mt-1">
-          <button
-            type="button"
-            className="absolute w-10 h-10 flex items-center justify-center left-0 top-1/2 -translate-y-1/2"
-            onClick={() => setIsKeywordsOpen(false)}
-          >
-            <VscArrowLeft />
-          </button>
+          {isKeywordsOpen && (
+            <button
+              type="button"
+              className="absolute w-10 h-10 flex items-center justify-center left-0 top-1/2 -translate-y-1/2"
+              onClick={() => setIsKeywordsOpen(false)}
+            >
+              <VscArrowLeft />
+            </button>
+          )}
           <DebounceInput
             type="search"
             inputMode="search"
-            className="border rounded w-full p-2 px-10 bg-white"
+            className="border rounded w-full p-2 pr-10 bg-white"
             value={query}
             onChange={onChange}
             list="recommends"
             autoFocus
             onFocus={() => setIsKeywordsOpen(true)}
+            style={isKeywordsOpen ? { paddingLeft: "2.5rem" } : undefined}
           />
           <button className="absolute w-10 h-10 flex items-center justify-center right-0 top-1/2 -translate-y-1/2">
             <VscSearch className="fill-black" />
