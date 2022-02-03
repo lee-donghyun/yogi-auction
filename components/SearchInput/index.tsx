@@ -22,7 +22,12 @@ const SearchInput: FC<UseSearch> = ({
       className="p-5 fixed inset-0 bottom-auto z-10"
       style={isKeywordsOpen ? { backgroundColor: "white" } : undefined}
     >
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={(e) => {
+          setIsKeywordsOpen(false);
+          onSubmit(e);
+        }}
+      >
         <div className="relative mt-1">
           <button
             type="button"
