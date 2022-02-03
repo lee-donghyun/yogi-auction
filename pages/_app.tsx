@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         ></link>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, minimum-scale=1, user-scalable=0"
         />
         <title>요기옥션</title>
       </Head>
