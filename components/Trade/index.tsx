@@ -24,7 +24,7 @@ const Trade: FC<Props> = ({ options, render: Footer }) => {
           />
         ))}
       </div>
-      <div className="mt-10 flex gap-x-4 fixed inset-x-0 bottom-14 p-5 bg-white border-t">
+      <div className="mt-10 flex gap-x-4 fixed inset-x-0 bottom-[calc(56px+env(safe-area-inset-bottom))] p-5 bg-white border-t">
         <Footer selected={selected} />
       </div>
     </div>
