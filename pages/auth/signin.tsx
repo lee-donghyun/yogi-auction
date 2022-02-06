@@ -1,21 +1,22 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { DebounceInput } from "react-debounce-input";
 import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
 import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
-import { postEmailSignUp } from "../../services/api/firebase";
+import { postEmailSingIn } from "../../services/api/firebase";
 import useForm from "../../services/hooks/useForm";
 import useStorage from "../../services/hooks/useStorage";
 
-const SignUp: NextPage = () => {
+const SignIn: NextPage = () => {
   const router = useRouter();
   const [selector, dispatch] = useStorage<{ auth: Auth.data }>();
   const { data, onChange, onSubmit, isLoading } = useForm(
     { email: "", password: "" },
     (data) =>
-      postEmailSignUp(data)
+      postEmailSingIn(data)
         .then((res) => {
           dispatch({ auth: res.data });
           router.replace("/user");
@@ -32,19 +33,19 @@ const SignUp: NextPage = () => {
             case "MISSING_EMAIL":
               alert("이메일을 입력해 주세요.");
               break;
-            case "EMAIL_EXISTS":
-              alert("이미 존재하는 이메일입니다.");
-              break;
-            case "OPERATION_NOT_ALLOWED":
-              alert("이메일 회원가입은 더 이상 지원하지 않습니다.");
+            case "EMAIL_NOT_FOUND":
+              alert("존재하지 않는 이메일입니다.");
               break;
             case "TOO_MANY_ATTEMPTS_TRY_LATER":
               alert(
                 "너무 많은 요청이 발생되었습니다. 잠시 후 다시 시도해 주세요."
               );
               break;
-            case "WEAK_PASSWORD : Password should be at least 6 characters":
-              alert("비밀번호는 6자리 이상이어야 합니다.");
+            case "INVALID_PASSWORD":
+              alert("비밀번호가 일치하지 않습니다.");
+              break;
+            case "USER_DISABLED":
+              alert("정지된 유저입니다.");
               break;
             default:
               alert("다시 시도해 주세요.");
@@ -91,16 +92,25 @@ const SignUp: NextPage = () => {
               </div>
             </div>
             <div className="mt-10 flex gap-x-4">
-              <Button mode="outline" href="/auth/signin">
-                로그인
+              <Button mode="outline" href="/auth/signup">
+                회원가입
               </Button>
               <Button mode="fill" submit>
                 {isLoading ? (
                   <VscLoading className="animate-spin mx-auto" />
                 ) : (
-                  "가입"
+                  "로그인"
                 )}
               </Button>
+            </div>
+            <div className="mt-5">
+              <ul className="text-stone-400 text-sm">
+                <li>
+                  <Link href="/auth/reset/password">
+                    <a>비밀번호 초기화</a>
+                  </Link>
+                </li>
+              </ul>
             </div>
           </form>
         </div>
@@ -110,4 +120,4 @@ const SignUp: NextPage = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

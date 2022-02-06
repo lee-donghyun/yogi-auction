@@ -27,3 +27,13 @@ export const postEmailSignUp = async (form: {
     returnSecureToken: true,
   });
 };
+
+export const postEmailSingIn = async (form: {
+  email: string;
+  password: string;
+}) => {
+  return identitytoolkit.post<Auth.data>(`/v1/accounts:signInWithPassword`, {
+    ...form,
+    returnSecureToken: true,
+  });
+};
