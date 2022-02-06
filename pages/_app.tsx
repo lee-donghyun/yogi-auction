@@ -1,6 +1,8 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { RecoilRoot } from "recoil";
+import Auth from "../components/Auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,7 +21,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>요기옥션</title>
       </Head>
       <div className="xl:p-32">
-        <Component {...pageProps} />
+        <RecoilRoot>
+          <Auth pages={["/menu"]}>
+            <Component {...pageProps} />
+          </Auth>
+        </RecoilRoot>
       </div>
     </>
   );

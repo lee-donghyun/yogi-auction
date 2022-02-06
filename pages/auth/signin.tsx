@@ -1,17 +1,21 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { DebounceInput } from "react-debounce-input";
 import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
 import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
-import { postEmailSingIn } from "../../services/api/firebase";
+import { postEmailSingIn } from "../../services/api/identitytoolkit";
+import { useAuth } from "../../services/hooks/useAuth";
 import useForm from "../../services/hooks/useForm";
 import useStorage from "../../services/hooks/useStorage";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
+  const { redirect } = router.query;
+  const [isAuthorized, load] = useAuth();
   const [selector, dispatch] = useStorage<{ auth: Auth.data }>();
   const { data, onChange, onSubmit, isLoading } = useForm(
     { email: "", password: "" },
@@ -19,7 +23,7 @@ const SignIn: NextPage = () => {
       postEmailSingIn(data)
         .then((res) => {
           dispatch({ auth: res.data });
-          router.replace("/user");
+          load(res.data.refreshToken);
         })
         .catch((error) => {
           const { message } = error.response.data.error;
@@ -53,6 +57,12 @@ const SignIn: NextPage = () => {
           }
         })
   );
+
+  useEffect(() => {
+    if (isAuthorized) {
+      router.replace(redirect ? redirect + "" : "/user");
+    }
+  }, [isAuthorized]);
 
   return (
     <div>
@@ -92,7 +102,10 @@ const SignIn: NextPage = () => {
               </div>
             </div>
             <div className="mt-10 flex gap-x-4">
-              <Button mode="outline" href="/auth/signup">
+              <Button
+                mode="outline"
+                href={{ pathname: "/auth/signup", query: router.query }}
+              >
                 회원가입
               </Button>
               <Button mode="fill" submit>
