@@ -7,7 +7,7 @@ const Naviagtion: FC = () => {
   const router = useRouter();
 
   return (
-    <div
+    <nav
       className={`
         fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)] 
       bg-white border-t border-black 
@@ -59,7 +59,7 @@ const Naviagtion: FC = () => {
           </a>
         </Link>
       </div>
-    </div>
+    </nav>
   );
 };
 
