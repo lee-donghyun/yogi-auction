@@ -5,11 +5,13 @@ import { authState } from "../store";
 import useStorage from "./useStorage";
 export const useAuth = (): [
   null | boolean,
-  (refreshToken?: string) => Promise<boolean | null>
+  (refreshToken?: string) => Promise<boolean | null>,
+  () => void
 ] => {
   const [isAuthorized, setIsAuthorized] = useRecoilState(authState);
   const [selector, dispatch, isInitialized] =
     useStorage<{ auth: Partial<Auth.data> }>();
+
   const load = async (refreshToken = selector("auth")?.refreshToken ?? "") => {
     try {
       setIsAuthorized(null);
@@ -26,13 +28,20 @@ export const useAuth = (): [
       return true;
     } catch (error) {
       setIsAuthorized(false);
+      dispatch({ auth: {} });
       return false;
     }
   };
+
+  const clear = () => {
+    dispatch({ auth: {} });
+    setIsAuthorized(false);
+  };
+
   useEffect(() => {
     if (isAuthorized === null && isInitialized) {
       load();
     }
   }, [isInitialized]);
-  return [isAuthorized, load];
+  return [isAuthorized, load, clear];
 };

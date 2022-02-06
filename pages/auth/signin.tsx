@@ -117,7 +117,7 @@ const SignIn: NextPage = () => {
               </Button>
             </div>
             <div className="mt-5">
-              <ul className="text-stone-400 text-sm">
+              <ul className="text-gray-300 text-sm">
                 <li>
                   <Link href="/auth/reset/password">
                     <a>비밀번호 초기화</a>

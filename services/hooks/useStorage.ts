@@ -12,19 +12,18 @@ const useStorage = <T extends { [key: string]: any }>(
 
   const selector = (key: keyof T) => data?.[key];
 
-  const dispatch = (payload: Partial<T>) =>
-    setData((p) => ({ ...p, ...payload }));
+  const dispatch = (payload: Partial<T>) => {
+    setData({ ...data, ...payload });
+    window[storage].setItem(
+      "USE_STORAGE",
+      JSON.stringify({ ...data, ...payload })
+    );
+  };
 
   useEffect(() => {
     setData(JSON.parse(window[storage].getItem("USE_STORAGE") ?? "{}"));
     setIsInitialized(true);
   }, []);
-
-  useEffect(() => {
-    if (data && isInitialized) {
-      window[storage].setItem("USE_STORAGE", JSON.stringify(data));
-    }
-  }, [data]);
 
   return [selector, dispatch, isInitialized];
 };
