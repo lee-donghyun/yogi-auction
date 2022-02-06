@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { ID_TOKEN_TIMEOUT } from "../../data";
 import { useAuth } from "../../services/hooks/useAuth";
 import Naviagtion from "../Navigation";
 import SEO from "../SEO";
@@ -8,7 +10,16 @@ type Props = {
 };
 const Auth: React.FC<Props> = ({ children, pages }) => {
   const router = useRouter();
-  const [isAuthorized] = useAuth();
+  const [isAuthorized, load] = useAuth();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      load();
+    }, ID_TOKEN_TIMEOUT * 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   if (isAuthorized === false && pages?.includes(router.pathname)) {
     router.replace({
