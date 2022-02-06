@@ -22,13 +22,7 @@ export const postEmailSignUp = async (form: {
   email: string;
   password: string;
 }) => {
-  return identitytoolkit.post<{
-    idToken: string;
-    email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
-  }>(`/v1/accounts:signUp`, {
+  return identitytoolkit.post<Auth.data>(`/v1/accounts:signUp`, {
     ...form,
     returnSecureToken: true,
   });

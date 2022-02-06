@@ -1,19 +1,56 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { DebounceInput } from "react-debounce-input";
+import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
 import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
 import { postEmailSignUp } from "../../services/api/firebase";
 import useForm from "../../services/hooks/useForm";
+import useStorage from "../../services/hooks/useStorage";
 
 const SignIn: NextPage = () => {
-  const { data, onChange, onSubmit } = useForm(
+  const router = useRouter();
+  const [selector, dispatch] = useStorage<{ auth: Auth.data }>();
+  const { data, onChange, onSubmit, isLoading } = useForm(
     { email: "", password: "" },
-    async (data) => {
-      try {
-        await postEmailSignUp(data);
-      } catch (error) {}
-    }
+    (data) =>
+      postEmailSignUp(data)
+        .then((res) => {
+          dispatch({ auth: res.data });
+          router.replace("/user");
+        })
+        .catch((error) => {
+          const { message } = error.response.data.error;
+          switch (message) {
+            case "INVALID_EMAIL":
+              alert("유효하지 않은 이메일입니다.");
+              break;
+            case "MISSING_PASSWORD":
+              alert("비밀번호를 입력해 주세요.");
+              break;
+            case "MISSING_EMAIL":
+              alert("이메일을 입력해 주세요.");
+              break;
+            case "EMAIL_EXISTS":
+              alert("이미 존재하는 이메일입니다.");
+              break;
+            case "OPERATION_NOT_ALLOWED":
+              alert("이메일 회원가입은 더 이상 지원하지 않습니다.");
+              break;
+            case "TOO_MANY_ATTEMPTS_TRY_LATER":
+              alert(
+                "너무 많은 요청이 발생되었습니다. 잠시 후 다시 시도해 주세요."
+              );
+              break;
+            case "WEAK_PASSWORD : Password should be at least 6 characters":
+              alert("비밀번호는 6자리 이상이어야 합니다.");
+              break;
+            default:
+              alert("다시 시도해 주세요.");
+              break;
+          }
+        })
   );
 
   return (
@@ -40,7 +77,7 @@ const SignIn: NextPage = () => {
             </div>
             <div className="mt-5">
               <div>
-                <label htmlFor="email">패스워드</label>
+                <label htmlFor="password">비밀번호</label>
               </div>
               <div className="mt-2">
                 <DebounceInput
@@ -58,7 +95,11 @@ const SignIn: NextPage = () => {
                 로그인
               </Button>
               <Button mode="fill" submit>
-                가입
+                {isLoading ? (
+                  <VscLoading className="animate-spin mx-auto" />
+                ) : (
+                  "가입"
+                )}
               </Button>
             </div>
           </form>
