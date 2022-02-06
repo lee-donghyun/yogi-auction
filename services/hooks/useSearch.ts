@@ -44,6 +44,7 @@ const useSearch = (): UseSearch => {
   const onChange = (e: any) => setQuery(e.target.value);
   const onSubmit = (e: any) => {
     e.preventDefault();
+    e.stopPropagation();
     e.target[0].blur();
     router.push({
       pathname: "/search",
