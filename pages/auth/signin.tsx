@@ -80,7 +80,7 @@ const SignIn: NextPage = () => {
                 <label htmlFor="email">이메일</label>
               </div>
               <div className="mt-2">
-                <DebounceInput
+                <input
                   id="email"
                   type="email"
                   name="email"
@@ -95,7 +95,7 @@ const SignIn: NextPage = () => {
                 <label htmlFor="password">비밀번호</label>
               </div>
               <div className="mt-2">
-                <DebounceInput
+                <input
                   id="password"
                   type="password"
                   name="password"
