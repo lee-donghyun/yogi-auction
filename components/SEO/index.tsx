@@ -4,7 +4,7 @@ import { FC } from "react";
 type Props = { title?: string; image?: string; description?: string };
 const SEO: FC<Props> = ({ title, image, description }) => {
   title = title ? title + " - 요기옥션" : "요기옥션";
-  image = image ?? "/images/assets/brand.png";
+  image = image ?? "/images/brand.png";
   description = description ?? "합리적 거래를 위한 실시간 시장가격";
   return (
     <Head>
