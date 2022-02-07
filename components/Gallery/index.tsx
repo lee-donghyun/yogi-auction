@@ -35,7 +35,7 @@ const Gallery: FC<{
           <img
             src={imageUrl}
             alt={name + i}
-            className="absolute inset-0 object-cover"
+            className="absolute inset-0 object-cover max-h-full min-h-full min-w-full max-w-full rounded"
           />
         </div>
       ))}
