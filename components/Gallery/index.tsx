@@ -35,7 +35,11 @@ const Gallery: FC<{
     <div className="grid grid-cols-4 gap-2">
       {imageUrls.map((imageUrl, i) => (
         <div className="aspect-square relative" key={imageUrl}>
-          <img src={imageUrl} alt={name + i} className="absolute inset-0" />
+          <img
+            src={imageUrl}
+            alt={name + i}
+            className="absolute inset-0 object-cover"
+          />
         </div>
       ))}
       {isImageUploading && (
