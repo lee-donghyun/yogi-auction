@@ -12,10 +12,13 @@ const app = initializeApp({
 
 const storage = getStorage(app);
 
-export const uploadFile = async (file: File, Authorization: string) => {
+export const uploadFile = async (file: File) => {
   const imageRef = ref(storage, `images/${getUuid()}`);
   await uploadBytes(imageRef, file, {
-    customMetadata: { Authorization },
+    customMetadata: {
+      Authorization: JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")
+        ?.auth?.idToken,
+    },
   });
   return await getDownloadURL(imageRef);
 };

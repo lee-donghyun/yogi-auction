@@ -13,10 +13,7 @@ const Gallery: FC<{
     if (files && !isImageUploading) {
       try {
         setIsImageUploading(true);
-        const imageUrl = await uploadFile(
-          files?.[0],
-          JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}").auth.idToken
-        );
+        const imageUrl = await uploadFile(files?.[0]);
         onChange({
           target: {
             name,
