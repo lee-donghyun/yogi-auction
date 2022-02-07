@@ -45,7 +45,7 @@ const useSearch = (): UseSearch => {
   const onSubmit = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    e.target[0].blur();
+    (document.activeElement as HTMLElement).blur();
     router.push({
       pathname: "/search",
       query: { ...router.query, q: query, n: Date.now() },
