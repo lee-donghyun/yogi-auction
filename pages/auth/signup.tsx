@@ -22,8 +22,9 @@ const SignUp: NextPage = () => {
       postEmailSignUp(data)
         .then((res) => {
           dispatch({ auth: res.data });
-          load(res.data.refreshToken);
+          return res.data.refreshToken;
         })
+        .then(load)
         .catch((error) => {
           const { message } = error.response.data.error;
           switch (message) {
