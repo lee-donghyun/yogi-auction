@@ -68,7 +68,11 @@ const SignUp: NextPage = () => {
       <SEO />
       <div className="min-h-screen">
         <div className="px-5">
-          <img src="/images/brand.png" alt="" className="w-28 mx-auto my-16" />
+          <img
+            src="/images/brand.png"
+            alt=""
+            className="w-28 h-28 mx-auto my-16"
+          />
           <form onSubmit={onSubmit} autoComplete="off" noValidate>
             <div>
               <div>
