@@ -23,8 +23,9 @@ const SignIn: NextPage = () => {
       postEmailSingIn(data)
         .then((res) => {
           dispatch({ auth: res.data });
-          load(res.data.refreshToken);
+          return res.data.refreshToken;
         })
+        .then(load)
         .catch((error) => {
           const { message } = error.response.data.error;
           switch (message) {
@@ -69,14 +70,18 @@ const SignIn: NextPage = () => {
       <SEO />
       <div className="min-h-screen">
         <div className="px-5">
-          <img src="/images/brand.png" alt="" className="w-28 mx-auto my-16" />
+          <img
+            src="/images/brand.png"
+            alt=""
+            className="w-28 h-28 mx-auto my-16"
+          />
           <form onSubmit={onSubmit} autoComplete="off" noValidate>
             <div>
               <div>
                 <label htmlFor="email">이메일</label>
               </div>
               <div className="mt-2">
-                <DebounceInput
+                <input
                   id="email"
                   type="email"
                   name="email"
@@ -91,7 +96,7 @@ const SignIn: NextPage = () => {
                 <label htmlFor="password">비밀번호</label>
               </div>
               <div className="mt-2">
-                <DebounceInput
+                <input
                   id="password"
                   type="password"
                   name="password"
