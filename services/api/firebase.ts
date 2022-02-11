@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 import { getUuid } from "../utils";
 
 const app = initializeApp({
@@ -11,6 +12,7 @@ const app = initializeApp({
 });
 
 const storage = getStorage(app);
+const db = getFirestore(app);
 
 export const uploadFile = async (file: File) => {
   const imageRef = ref(storage, `images/${getUuid()}`);
@@ -21,4 +23,28 @@ export const uploadFile = async (file: File) => {
     },
   });
   return await getDownloadURL(imageRef);
+};
+
+export const addUser = (localId: string) =>
+  setDoc(doc(db, "users", localId), {
+    id: localId,
+    asks: [],
+    bids: [],
+    buying: [],
+    selling: [],
+  });
+
+export const registerItem = (payload: Item.Register) => {
+  const itemId = getUuid();
+  return setDoc(doc(db, "items", itemId), {
+    asks: [],
+    bids: [],
+    id: itemId,
+    like: 0,
+    lowestAsk: null,
+    releasedAt: Date.now(),
+    sold: 0,
+    view: 0,
+    ...payload,
+  });
 };

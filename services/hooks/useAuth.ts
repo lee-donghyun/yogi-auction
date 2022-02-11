@@ -19,6 +19,7 @@ export const useAuth = (): [
       dispatch({
         auth: {
           ...selector("auth"),
+          localId: data.user_id,
           refreshToken: data.refresh_token,
           idToken: data.id_token,
           expiresIn: data.expires_in,

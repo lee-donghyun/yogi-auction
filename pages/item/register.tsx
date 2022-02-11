@@ -1,21 +1,22 @@
 import type { NextPage } from "next";
-import { VscAdd, VscLoading } from "react-icons/vsc";
+import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
 import Gallery from "../../components/Gallery";
 import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
+import { registerItem } from "../../services/api/firebase";
 import useForm from "../../services/hooks/useForm";
 
 const RegisterItem: NextPage = () => {
-  const { data, onChange, onSubmit, isValid, isLoading } = useForm<{
-    imageUrls: string[];
-    name: string;
-    description: string;
-  }>(
-    { imageUrls: [], name: "", description: "" },
-    async (data) => {},
-    (data) => !!(data.imageUrls.length && data.name && data.description)
-  );
+  const { data, onChange, onSubmit, isValid, isLoading } =
+    useForm<Item.Register>(
+      { images: [], name: "", description: "" },
+      (data) =>
+        registerItem(data)
+          .then(() => {})
+          .catch(() => {}),
+      (data) => !!(data.images.length && data.name && data.description)
+    );
 
   console.log(data);
 
@@ -66,8 +67,8 @@ const RegisterItem: NextPage = () => {
               </div>
               <div className="mt-2">
                 <Gallery
-                  imageUrls={data.imageUrls}
-                  name="imageUrls"
+                  imageUrls={data.images}
+                  name="images"
                   onChange={onChange}
                 />
               </div>
@@ -78,7 +79,11 @@ const RegisterItem: NextPage = () => {
                 theme={isValid ? undefined : "#ebebeb"}
                 submit
               >
-                등록하기
+                {isLoading ? (
+                  <VscLoading className="animate-spin mx-auto" />
+                ) : (
+                  "등록하기"
+                )}
               </Button>
             </div>
           </form>

@@ -30,4 +30,10 @@ namespace Item {
     price: string;
     quantity: number;
   };
+
+  type Register = {
+    images: string[];
+    name: string;
+    description: string;
+  };
 }

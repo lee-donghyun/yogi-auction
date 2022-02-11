@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FC } from "react";
-import { Url, UrlObject } from "url";
+import { UrlObject } from "url";
 
 type Props = {
   mode?: "outline" | "fill";
@@ -19,7 +19,7 @@ const Button: FC<Props> = ({
   submit,
 }) => {
   const style = `
-        rounded w-full p-4 block text-center
+        rounded w-full flex items-center justify-center h-14
         ${mode === "outline" && "border border-current"} 
         ${mode === "fill" && "bg-black border border-black text-white"}
       `;

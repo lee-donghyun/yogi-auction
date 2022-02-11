@@ -1,4 +1,5 @@
 import axios from "axios";
+import { addUser } from "./firebase";
 
 const identitytoolkit = axios.create({
   baseURL: "https://identitytoolkit.googleapis.com",
@@ -22,10 +23,12 @@ export const postEmailSignUp = async (form: {
   email: string;
   password: string;
 }) => {
-  return identitytoolkit.post<Auth.data>(`/v1/accounts:signUp`, {
+  const data = await identitytoolkit.post<Auth.data>(`/v1/accounts:signUp`, {
     ...form,
     returnSecureToken: true,
   });
+  await addUser(data.data.localId);
+  return data;
 };
 
 export const postEmailSingIn = async (form: {
