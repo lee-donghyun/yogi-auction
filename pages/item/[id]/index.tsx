@@ -15,10 +15,10 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }) => {
   return (
     <>
-      <SEO title={item.name} image={item.imageList[0]} />
+      <SEO title={item.name} image={item.images[0]} />
       <div>
         <div className="mt-5 p-5">
-          <Swiper images={item.imageList} />
+          <Swiper images={item.images} />
           <h1 className="font-semibold text-2xl mt-9">{item.name}</h1>
           <p className="text-lg mt-1">
             {item.lowestAsk}
@@ -30,7 +30,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Ask
               </Button>
               <div className="mt-3 mr-2">
-                {item.ask.slice(0, 3).map((ask) => (
+                {item.asks.slice(0, 3).map((ask) => (
                   <p
                     className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
                     key={ask.id}
@@ -45,7 +45,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Bid
               </Button>
               <div className="mt-3 mr-2">
-                {item.bid.slice(0, 3).map((bid) => (
+                {item.bids.slice(0, 3).map((bid) => (
                   <p
                     className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
                     key={bid.id}

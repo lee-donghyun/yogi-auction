@@ -4,7 +4,7 @@ import { items as serverItems } from "../../data/items";
 import useStorage from "./useStorage";
 
 export type UseSearch = {
-  items: Item.ListItem[];
+  items: Item.Item[];
   recommends: string[];
   query: string;
   onChange: (e: any) => void;
@@ -26,7 +26,7 @@ const useSearch = (): UseSearch => {
   const [query, setQuery] = useState<string>(sp?.get("q") ?? "");
   const [recommends, setRecommends] = useState<string[]>([]);
 
-  const [items, setItems] = useState<Item.ListItem[]>([]);
+  const [items, setItems] = useState<Item.Item[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);

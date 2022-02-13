@@ -28,7 +28,7 @@ const PlaceAsk: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 
   const { option } = router.query;
-  const optionName = item.ask.find((askOption) => askOption.id == option)?.name;
+  const optionName = item.asks.find((ask) => ask.id == option)?.name;
 
   return (
     <>

@@ -1,6 +1,18 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  collection,
+  query,
+  orderBy,
+  startAfter,
+  limit,
+  getDocs,
+  DocumentData,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { getUuid } from "../utils";
 
 const app = initializeApp({
@@ -47,4 +59,17 @@ export const registerItem = (payload: Item.Register) => {
     view: 0,
     ...payload,
   });
+};
+
+export const getItems = async (
+  bookmark?: QueryDocumentSnapshot<DocumentData>
+) => {
+  const q = bookmark
+    ? query(collection(db, "items"), startAfter(bookmark), limit(25))
+    : query(collection(db, "items"), limit(25));
+  const documentSnapshots = await getDocs(q);
+  return {
+    bookmark: documentSnapshots.docs[documentSnapshots.docs.length - 1],
+    data: documentSnapshots.docs.map((doc) => doc.data()),
+  };
 };

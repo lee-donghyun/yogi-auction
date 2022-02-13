@@ -28,7 +28,7 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 
   const { option } = router.query;
-  const optionName = item.bid.find((bidOption) => bidOption.id == option)?.name;
+  const optionName = item.bids.find((bid) => bid.id == option)?.name;
 
   return (
     <>

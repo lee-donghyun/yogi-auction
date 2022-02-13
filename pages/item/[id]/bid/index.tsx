@@ -20,7 +20,7 @@ const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <SEO title={item.name} />
       <div>
         <Trade
-          options={item.bid}
+          options={item.bids}
           render={({ selected }) => (
             <>
               <Button
