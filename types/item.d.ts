@@ -1,11 +1,4 @@
 namespace Item {
-  type ListItem = {
-    image: string;
-    name: string;
-    lowestAsk: string;
-    id: string;
-  };
-
   type List = {
     page: number;
     totalPage: number;
@@ -14,20 +7,28 @@ namespace Item {
   };
 
   type Item = {
-    id: string;
-    imageList: string[];
-    name: string;
+    asks: Option[];
+    bids: Option[];
     description: string;
-    ask: Option[];
-    bid: Option[];
-    lastSalePrice: string;
-    lowestAsk: string;
+    id: string;
+    images: string[];
+    like: number;
+    lowestAsk: number | null;
+    name: string;
+    releasedAt: string;
+    sold: number;
+    view: number;
   };
 
   type Option = {
     id: string;
     name: string;
-    price: string;
-    quantity: number;
+    price: number;
+  };
+
+  type Register = {
+    images: string[];
+    name: string;
+    description: string;
   };
 }

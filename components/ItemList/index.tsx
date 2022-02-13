@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { FC } from "react";
+import { formatPrice } from "../../services/utils";
 
-const ItemList: FC<{ items: Item.ListItem[] }> = ({ items }) => {
+const ItemList: FC<{ items: Item.Item[] }> = ({ items }) => {
   return (
     <div className="">
       <div className="mt-5">
@@ -17,7 +18,7 @@ const ItemList: FC<{ items: Item.ListItem[] }> = ({ items }) => {
 
 export default ItemList;
 
-const Item: FC<{ item: Item.ListItem }> = ({ item }) => {
+const Item: FC<{ item: Item.Item }> = ({ item }) => {
   return (
     <>
       <div className="relative w-full">
@@ -25,7 +26,7 @@ const Item: FC<{ item: Item.ListItem }> = ({ item }) => {
           <a>
             <div>
               <img
-                src={item.image}
+                src={item.images[0]}
                 alt={item.name}
                 className="p-3 aspect-[3/4] object-contain w-full"
               />
@@ -37,7 +38,7 @@ const Item: FC<{ item: Item.ListItem }> = ({ item }) => {
               <p className="mt-1 text-gray-700 text-sm">
                 Lowest Ask
                 <br />
-                {item.lowestAsk}
+                {item.lowestAsk ? formatPrice(item.lowestAsk) : "no asks"}
               </p>
             </div>
           </a>

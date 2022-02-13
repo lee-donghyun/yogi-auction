@@ -13,11 +13,11 @@ const useForm = <T>(
   const onChange = (e: any) => {
     let { name, value, type, checked, dataset } = e.target;
 
-    if (dataset.format === "comma") {
+    if (dataset?.format === "comma") {
       value = value.split(",").join("");
     }
 
-    if (dataset.type === "number" || type === "number") {
+    if (dataset?.type === "number" || type === "number") {
       value = Number(value);
     }
 

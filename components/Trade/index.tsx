@@ -54,8 +54,5 @@ const Option: FC<{
         <p>{option.price}</p>
       </div>
     </div>
-    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-red-600">
-      {option.quantity === 1 && "마지막 수량"}
-    </span>
   </button>
 );

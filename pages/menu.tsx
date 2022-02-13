@@ -14,7 +14,7 @@ const Menu: NextPage = () => {
       <div className="min-h-screen">
         <ul>
           <li>
-            <MenuItem href="/" name="상품 등록" />
+            <MenuItem href="/item/register" name="상품 등록" />
           </li>
           <li>
             <MenuItem href="/" name="진행 중 거래" />
@@ -26,12 +26,14 @@ const Menu: NextPage = () => {
             <MenuItem href="/" name="판매 입찰 내역" />
           </li>
         </ul>
-        <button
-          className="text-gray-300 text-sm underline ml-4 mt-10"
-          onClick={clear}
-        >
-          로그아웃
-        </button>
+        {isAuthorized && (
+          <button
+            className="text-gray-300 text-sm underline ml-4 mt-10"
+            onClick={clear}
+          >
+            로그아웃
+          </button>
+        )}
       </div>
       <Naviagtion />
     </div>

@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <div className="xl:p-32">
         <RecoilRoot>
-          <Auth pages={["/menu"]}>
+          <Auth pages={["/item/register"]}>
             <Component {...pageProps} />
           </Auth>
         </RecoilRoot>
