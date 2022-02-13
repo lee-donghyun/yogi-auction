@@ -61,15 +61,20 @@ export const registerItem = (payload: Item.Register) => {
   });
 };
 
+export const PAGE_SIZE = 24;
 export const getItems = async (
-  bookmark?: QueryDocumentSnapshot<DocumentData>
-) => {
-  const q = bookmark
-    ? query(collection(db, "items"), startAfter(bookmark), limit(25))
-    : query(collection(db, "items"), limit(25));
+  bookmark: QueryDocumentSnapshot<DocumentData> | "INITIAL_REQUEST"
+): Promise<{
+  bookmark: QueryDocumentSnapshot<DocumentData> | null;
+  data: Item.Item[];
+}> => {
+  const q =
+    bookmark === "INITIAL_REQUEST"
+      ? query(collection(db, "items"), limit(PAGE_SIZE))
+      : query(collection(db, "items"), startAfter(bookmark), limit(PAGE_SIZE));
   const documentSnapshots = await getDocs(q);
   return {
     bookmark: documentSnapshots.docs[documentSnapshots.docs.length - 1],
-    data: documentSnapshots.docs.map((doc) => doc.data()),
+    data: documentSnapshots.docs.map((doc) => doc.data()) as any,
   };
 };
