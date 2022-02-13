@@ -5,3 +5,5 @@ export const getUuid = () => {
     return v.toString(16);
   });
 };
+
+export const formatPrice = (price: number) => `₩${price.toLocaleString()}`;

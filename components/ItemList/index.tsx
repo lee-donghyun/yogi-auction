@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FC } from "react";
+import { formatPrice } from "../../services/utils";
 
 const ItemList: FC<{ items: Item.Item[] }> = ({ items }) => {
   return (
@@ -37,7 +38,7 @@ const Item: FC<{ item: Item.Item }> = ({ item }) => {
               <p className="mt-1 text-gray-700 text-sm">
                 Lowest Ask
                 <br />
-                {item.lowestAsk}
+                {item.lowestAsk ? formatPrice(item.lowestAsk) : "no asks"}
               </p>
             </div>
           </a>

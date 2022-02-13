@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ItemList from "../components/ItemList";
 import Naviagtion from "../components/Navigation";
 import SEO from "../components/SEO";
@@ -9,6 +9,8 @@ import useSWRInfinite from "swr/infinite";
 import ItemListSkeleton from "../components/ItemList/skeleton";
 import ItemListEmpty from "../components/ItemList/empty";
 import { useRouter } from "next/router";
+import Counter from "../components/Counter";
+import Button from "../components/Button";
 
 const getKey = (index: any, prevData: any) =>
   index ? prevData.bookmark : "INITIAL_REQUEST";
@@ -47,14 +49,27 @@ const Home: NextPage = () => {
     <div>
       <SEO />
       <div className="pb-[86px] min-h-screen">
-        {items.length > 0 && <ItemList items={items} />}
-        {isLoading && <ItemListSkeleton />}
-        {(isReachingEnd || isEmpty) && (
-          <div className="mt-10">
-            <ItemListEmpty />
+        <div className="my-16 p-5 pt-0">
+          <div className="mb-7">
+            <img src="/images/brand.png" alt="" className="w-28 h-28 mx-auto" />
           </div>
-        )}
-        <div ref={observer} className="translate-y-[-80vh]" />
+          <Counter />
+          <div className="mt-10">
+            <Button href="/auth/signup" mode="fill">
+              Sign Up
+            </Button>
+          </div>
+        </div>
+        <div>
+          {items.length > 0 && <ItemList items={items} />}
+          {isLoading && <ItemListSkeleton />}
+          {(isReachingEnd || isEmpty) && (
+            <div className="mt-10">
+              <ItemListEmpty />
+            </div>
+          )}
+          <div ref={observer} className="translate-y-[-80vh]" />
+        </div>
       </div>
       <Naviagtion />
     </div>

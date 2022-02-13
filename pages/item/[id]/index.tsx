@@ -9,6 +9,7 @@ import Naviagtion from "../../../components/Navigation";
 import SEO from "../../../components/SEO";
 import Swiper from "../../../components/Swiper";
 import { getItem } from "../../../services/api";
+import { formatPrice } from "../../../services/utils";
 
 const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
@@ -21,7 +22,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <Swiper images={item.images} />
           <h1 className="font-semibold text-2xl mt-9">{item.name}</h1>
           <p className="text-lg mt-1">
-            {item.lowestAsk}
+            {item.lowestAsk ? formatPrice(item.lowestAsk) : null}
             <span className="text-xs"> (lowest ask)</span>
           </p>
           <div className="mt-4 flex gap-x-4 items-start">
@@ -35,7 +36,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
                     key={ask.id}
                   >
-                    {ask.name} - {ask.price}
+                    {ask.name} - {formatPrice(ask.price)}
                   </p>
                 ))}
               </div>
@@ -50,7 +51,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                     className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
                     key={bid.id}
                   >
-                    {bid.name} - {bid.price}
+                    {bid.name} - {formatPrice(bid.price)}
                   </p>
                 ))}
               </div>
