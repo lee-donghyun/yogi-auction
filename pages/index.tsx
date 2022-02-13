@@ -55,8 +55,8 @@ const Home: NextPage = () => {
           </div>
           <Counter />
           <div className="mt-10">
-            <Button href="/auth/signup" mode="fill">
-              Sign Up
+            <Button href="/search" mode="fill">
+              상품 탐색하기
             </Button>
           </div>
         </div>
