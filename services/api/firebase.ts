@@ -4,6 +4,7 @@ import {
   getFirestore,
   setDoc,
   doc,
+  getDoc,
   collection,
   query,
   orderBy,
@@ -77,4 +78,14 @@ export const getItems = async (
     bookmark: documentSnapshots.docs[documentSnapshots.docs.length - 1],
     data: documentSnapshots.docs.map((doc) => doc.data()) as any,
   };
+};
+
+export const getItem = async (id: string): Promise<{ data: Item.Item }> => {
+  const docRef = doc(db, "items", id);
+  const docSnap = await getDoc(docRef);
+  if (!docSnap.exists()) {
+    throw new Error("no data exist");
+  } else {
+    return { data: docSnap.data() as Item.Item };
+  }
 };
