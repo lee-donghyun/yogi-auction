@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useEffect } from "react";
 import ItemList from "../components/ItemList";
 import Naviagtion from "../components/Navigation";
 import SEO from "../components/SEO";
@@ -8,7 +7,6 @@ import { useObserver } from "../services/hooks/useObserver";
 import useSWRInfinite from "swr/infinite";
 import ItemListSkeleton from "../components/ItemList/skeleton";
 import ItemListEmpty from "../components/ItemList/empty";
-import { useRouter } from "next/router";
 import Counter from "../components/Counter";
 import Button from "../components/Button";
 
@@ -16,8 +14,6 @@ const getKey = (index: any, prevData: any) =>
   index ? prevData.bookmark : "INITIAL_REQUEST";
 
 const Home: NextPage = () => {
-  const router = useRouter();
-
   const { data, size, setSize } = useSWRInfinite(getKey, getItems);
   const items = data?.flatMap(({ data }) => data) ?? [];
   const isLoading =
@@ -28,22 +24,9 @@ const Home: NextPage = () => {
 
   const observer = useObserver(() => {
     if (!isLoading && !isReachingEnd) {
-      router.replace(
-        {
-          pathname: router.pathname,
-          query: { ...router.query, p: size + 1 },
-        },
-        undefined,
-        { scroll: false }
-      );
+      setSize(size + 1);
     }
   });
-
-  useEffect(() => {
-    if (typeof router.query.p === "string") {
-      setSize(Number(router.query.p) || 0);
-    }
-  }, [router.query.p]);
 
   return (
     <div>
