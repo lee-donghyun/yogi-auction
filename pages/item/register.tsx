@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
 import Gallery from "../../components/Gallery";
@@ -8,13 +9,18 @@ import { registerItem } from "../../services/api/firebase";
 import useForm from "../../services/hooks/useForm";
 
 const RegisterItem: NextPage = () => {
+  const router = useRouter();
   const { data, onChange, onSubmit, isValid, isLoading } =
     useForm<Item.Register>(
       { images: [], name: "", description: "" },
       (data) =>
         registerItem(data)
-          .then(() => {})
-          .catch(() => {}),
+          .then((item) => {
+            router.push(`/item/${item.id}`);
+          })
+          .catch(() => {
+            alert("다시 시도해주세요.");
+          }),
       (data) => !!(data.images.length && data.name && data.description)
     );
 
