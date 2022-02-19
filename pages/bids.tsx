@@ -23,7 +23,7 @@ const Bids: NextPage = () => {
         )}
         <ul>
           {data?.bids.map((bid) => (
-            <li>
+            <li key={bid.option.id}>
               <ItemOption option={bid} mutate={mutate} />
             </li>
           ))}

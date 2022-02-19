@@ -23,7 +23,7 @@ const Asks: NextPage = () => {
         )}
         <ul>
           {data?.asks.map((ask) => (
-            <li>
+            <li key={ask.option.id}>
               <ItemOption option={ask} mutate={mutate} />
             </li>
           ))}
