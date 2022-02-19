@@ -6,28 +6,44 @@ import type {
 } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { VscLoading } from "react-icons/vsc";
 import Button from "../../../../components/Button";
 import SEO from "../../../../components/SEO";
-import { getItem } from "../../../../services/api/firebase";
+import { getItem, placeOption } from "../../../../services/api/firebase";
 import useForm from "../../../../services/hooks/useForm";
+import { getUuid } from "../../../../services/utils";
 
 const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
 }) => {
   const router = useRouter();
+  const { option } = router.query;
 
   const { data, onChange, onSubmit, isLoading, isValid } = useForm(
     {
       bidPrice: 0,
     },
     async (data) => {
-      // 회원이 아니면 회원 가입 시킴, 회원이면 결제 페이지로 이동
-      router.push("/checkout");
+      try {
+        const optionId = getUuid();
+        await placeOption("bids", {
+          item: {
+            id: item.id,
+            name: item.name,
+          },
+          option: {
+            id: optionId,
+            name: String(option),
+            price: data.bidPrice,
+          },
+        });
+        await router.push("/bids");
+      } catch (error) {
+        alert("다시 시도해주세요.");
+      }
     },
     (data) => !!data.bidPrice
   );
-
-  const { option } = router.query;
 
   return (
     <>
@@ -70,7 +86,11 @@ const PlaceBid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   mode="fill"
                   theme={isValid ? undefined : "#ebebeb"}
                 >
-                  Place Bid
+                  {isLoading ? (
+                    <VscLoading className="animate-spin mx-auto" />
+                  ) : (
+                    "Place Bid"
+                  )}
                 </Button>
               </div>
             </div>

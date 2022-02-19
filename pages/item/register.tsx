@@ -15,9 +15,7 @@ const RegisterItem: NextPage = () => {
       { images: [], name: "", description: "" },
       (data) =>
         registerItem(data)
-          .then((item) => {
-            router.push(`/item/${item.id}`);
-          })
+          .then((item) => router.push(`/item/${item.id}`))
           .catch(() => {
             alert("다시 시도해주세요.");
           }),

@@ -13,6 +13,8 @@ import {
   getDocs,
   DocumentData,
   QueryDocumentSnapshot,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { getUuid } from "../utils";
 
@@ -90,4 +92,35 @@ export const getItem = async (id: string): Promise<{ data: Item.Item }> => {
   } else {
     return { data: docSnap.data() as Item.Item };
   }
+};
+
+export const placeOption = async (
+  option: "asks" | "bids",
+  payload: User.Option
+) => {
+  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
+    ?.localId;
+
+  const userRef = doc(db, "users", token);
+  await updateDoc(userRef, { [option]: arrayUnion(payload) });
+
+  const itemRef = doc(db, "items", payload.item.id);
+  const itemSnap = await getDoc(itemRef);
+  const item = itemSnap.data();
+  await updateDoc(itemRef, {
+    [option]: item?.[option]?.map(
+      (_option: Item.Option): Item.Option =>
+        _option.name == payload.option.name
+          ? {
+              name: payload.option.name,
+              options: [
+                ..._option.options,
+                { id: payload.option.id, price: payload.option.price },
+              ].sort((a, b) =>
+                option === "asks" ? a.price - b.price : b.price - a.price
+              ),
+            }
+          : _option
+    ),
+  });
 };

@@ -114,7 +114,7 @@ const useSearch = (): UseSearch => {
 
 const getItem = async (query: string, page: number): Promise<Item.List> => {
   await new Promise<void>((res) => setTimeout(res, 2000));
-  const result = serverItems.sort(() => Math.random() - 0.5);
+  const result = serverItems().sort(() => Math.random() - 0.5);
   return { items: result, count: 12, page, totalPage: 48 };
 };
 
