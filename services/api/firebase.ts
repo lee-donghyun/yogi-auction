@@ -122,5 +122,9 @@ export const placeOption = async (
             }
           : _option
     ),
+    lowestAsk:
+      option === "asks" && payload.option.price < item?.lowestAsk
+        ? payload.option.price
+        : item?.lowestAsk,
   });
 };
