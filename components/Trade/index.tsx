@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
+import { formatPrice } from "../../services/utils";
 
 type Props = {
   options: Item.Option[];
@@ -51,7 +52,7 @@ const Option: FC<{
         <p className="text-lg font-semibold">{option.name}</p>
       </div>
       <div>
-        <p>{option.price}</p>
+        <p>{formatPrice(option.price)}</p>
       </div>
     </div>
   </button>

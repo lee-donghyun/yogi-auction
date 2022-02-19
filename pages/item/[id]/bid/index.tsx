@@ -8,7 +8,7 @@ import Link from "next/link";
 import Button from "../../../../components/Button";
 import SEO from "../../../../components/SEO";
 import Trade from "../../../../components/Trade";
-import { getItem } from "../../../../services/api";
+import { getItem } from "../../../../services/api/firebase";
 
 const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item,
@@ -59,22 +59,21 @@ export default Bid;
 export const getStaticProps: GetStaticProps<{
   item: Item.Item;
 }> = async (context) => {
-  console.log(context.params);
   const id = context?.params?.id + "";
 
-  console.log(id);
-
-  // const item: Item.Item = await (
-  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item/${id}`)
-  // ).json();
-
-  const item = getItem(id) as Item.Item;
-
-  return {
-    props: {
-      item,
-    },
-  };
+  try {
+    const { data: item } = await getItem(id);
+    return {
+      props: {
+        item,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+      revalidate: 60 * 60,
+    };
+  }
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {

@@ -47,9 +47,9 @@ export const addUser = (localId: string) =>
     selling: [],
   });
 
-export const registerItem = (payload: Item.Register) => {
+export const registerItem = async (_payload: Item.Register) => {
   const itemId = getUuid();
-  return setDoc(doc(db, "items", itemId), {
+  const payload = {
     asks: [],
     bids: [],
     id: itemId,
@@ -58,8 +58,10 @@ export const registerItem = (payload: Item.Register) => {
     releasedAt: Date.now(),
     sold: 0,
     view: 0,
-    ...payload,
-  });
+    ..._payload,
+  };
+  await setDoc(doc(db, "items", itemId), payload);
+  return payload;
 };
 
 export const PAGE_SIZE = 24;
