@@ -52,13 +52,13 @@ export const registerItem = async (_payload: Item.Register) => {
   const payload = {
     asks: [],
     bids: [],
-    id: itemId,
     like: 0,
     lowestAsk: null,
     releasedAt: Date.now(),
     sold: 0,
     view: 0,
     ..._payload,
+    id: itemId,
   };
   await setDoc(doc(db, "items", itemId), payload);
   return payload;

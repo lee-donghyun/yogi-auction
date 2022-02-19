@@ -31,14 +31,17 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Ask
               </Button>
               <div className="mt-3 mr-2">
-                {item.asks.slice(0, 3).map((ask) => (
-                  <p
-                    className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
-                    key={ask.id}
-                  >
-                    {ask.name} - {formatPrice(ask.price)}
-                  </p>
-                ))}
+                {item.asks
+                  .filter((ask) => ask.options.length)
+                  .slice(0, 3)
+                  .map((ask) => (
+                    <p
+                      className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
+                      key={ask.name}
+                    >
+                      {ask.name} - {formatPrice(ask.options[0].price)}
+                    </p>
+                  ))}
               </div>
             </div>
             <div className="w-full">
@@ -46,14 +49,17 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Bid
               </Button>
               <div className="mt-3 mr-2">
-                {item.bids.slice(0, 3).map((bid) => (
-                  <p
-                    className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
-                    key={bid.id}
-                  >
-                    {bid.name} - {formatPrice(bid.price)}
-                  </p>
-                ))}
+                {item.bids
+                  .filter((bid) => bid.options.length)
+                  .slice(0, 3)
+                  .map((bid) => (
+                    <p
+                      className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
+                      key={bid.name}
+                    >
+                      {bid.name} - {formatPrice(bid.options[0].price)}
+                    </p>
+                  ))}
               </div>
             </div>
           </div>

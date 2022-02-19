@@ -28,7 +28,6 @@ const PlaceAsk: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   );
 
   const { option } = router.query;
-  const optionName = item.asks.find((ask) => ask.id == option)?.name;
 
   return (
     <>
@@ -36,7 +35,7 @@ const PlaceAsk: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <div className="pb-64 min-h-screen">
         <div className="p-5">
           <h1 className="text-xl">{item.name}</h1>
-          <p className="text mt-1">{optionName}</p>
+          <p className="text mt-1">{option}</p>
         </div>
         <div className="p-5">
           <form onSubmit={onSubmit} autoComplete="off" noValidate>

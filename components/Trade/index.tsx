@@ -10,7 +10,7 @@ type Props = {
 const Trade: FC<Props> = ({ options, render: Footer }) => {
   const { asPath } = useRouter();
   const [selected, setSelected] = useState(
-    new URLSearchParams(asPath.split("?")[1]).get("option") ?? options[0].id
+    new URLSearchParams(asPath.split("?")[1]).get("option") ?? options[0].name
   );
 
   return (
@@ -18,9 +18,9 @@ const Trade: FC<Props> = ({ options, render: Footer }) => {
       <div>
         {options.map((option) => (
           <Option
-            key={option.id}
+            key={option.name}
             option={option}
-            isActive={option.id === selected}
+            isActive={option.name === selected}
             onClick={setSelected}
           />
         ))}
@@ -41,7 +41,7 @@ const Option: FC<{
 }> = ({ option, isActive, onClick }) => (
   <button
     type="button"
-    onClick={() => onClick(option.id)}
+    onClick={() => onClick(option.name)}
     className={`
       block w-full py-5 relative rounded border
       ${isActive ? "border-black" : "border-white text-gray-400"}
@@ -52,7 +52,10 @@ const Option: FC<{
         <p className="text-lg font-semibold">{option.name}</p>
       </div>
       <div>
-        <p>{formatPrice(option.price)}</p>
+        {!!option?.options?.length && (
+          <p>{formatPrice(option.options[0].price)}</p>
+        )}
+        {!option?.options?.length && <p>no data</p>}
       </div>
     </div>
   </button>

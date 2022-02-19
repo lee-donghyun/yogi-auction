@@ -21,9 +21,11 @@ namespace Item {
   };
 
   type Option = {
-    id: string;
     name: string;
-    price: number;
+    options: {
+      id: string;
+      price: number;
+    }[];
   };
 
   type Register = {
