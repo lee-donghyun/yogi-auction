@@ -15,6 +15,7 @@ import {
   QueryDocumentSnapshot,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { getUuid } from "../utils";
 
@@ -127,4 +128,56 @@ export const placeOption = async (
         ? payload.option.price
         : item?.lowestAsk,
   });
+};
+
+export const deleteOption = async (
+  option: "asks" | "bids",
+  payload: User.Option
+) => {
+  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
+    ?.localId;
+
+  const userRef = doc(db, "users", token);
+  const userSnap = await getDoc(userRef);
+  const user = userSnap.data();
+  await updateDoc(userRef, {
+    [option]: user?.[option].filter(
+      (option: User.Option) => option.option.id !== payload.option.id
+    ),
+  });
+
+  const itemRef = doc(db, "items", payload.item.id);
+  const itemSnap = await getDoc(itemRef);
+  const item = itemSnap.data();
+  await updateDoc(itemRef, {
+    [option]: item?.[option]?.map((_option: Item.Option) =>
+      _option.name === payload.option.name
+        ? {
+            name: _option.name,
+            options: _option.options.filter(
+              (__option) => __option.id !== payload.option.id
+            ),
+          }
+        : _option
+    ),
+  });
+
+  if (option === "asks" && payload.option.price === item?.lowestAsk) {
+    const updatedItem = (await getDoc(itemRef)).data();
+    await updateDoc(itemRef, {
+      lowestAsk:
+        updatedItem?.asks
+          .flatMap((ask: Item.Option) => ask.options)
+          .sort((a: any, b: any) => a.price - b.price)?.[0]?.price ?? null,
+    });
+  }
+};
+
+export const getUser = async (): Promise<any> => {
+  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
+    ?.localId;
+
+  const userRef = doc(db, "users", token);
+  const user = await getDoc(userRef);
+  return user.data();
 };

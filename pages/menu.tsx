@@ -20,10 +20,10 @@ const Menu: NextPage = () => {
             <MenuItem href="/" name="진행 중 거래" />
           </li>
           <li>
-            <MenuItem href="/" name="구매 입찰 내역" />
+            <MenuItem href="/bids" name="구매 입찰 내역" />
           </li>
           <li>
-            <MenuItem href="/" name="판매 입찰 내역" />
+            <MenuItem href="/asks" name="판매 입찰 내역" />
           </li>
         </ul>
         {isAuthorized && (
