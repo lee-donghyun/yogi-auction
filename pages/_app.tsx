@@ -27,6 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
               "/item/register",
               "/item/[id]/ask/place",
               "/item/[id]/bid/place",
+              "/item/[id]/sell",
+              "/item/[id]/buy",
               "/asks",
               "/bids",
             ]}

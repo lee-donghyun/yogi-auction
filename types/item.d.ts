@@ -25,6 +25,7 @@ namespace Item {
     options: {
       id: string;
       price: number;
+      placer: string;
     }[];
   };
 

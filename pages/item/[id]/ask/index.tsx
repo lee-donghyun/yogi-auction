@@ -34,8 +34,8 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </Button>
               <Button
                 href={{
-                  // 회원이 아니면 로그인 페이지, 맞으면 마이 페이지 내 진행 중 거래 페이지.
-                  pathname: `/checkout`,
+                  pathname: `/item/${item.id}/sell`,
+                  query: { option: selected },
                 }}
                 mode="fill"
               >

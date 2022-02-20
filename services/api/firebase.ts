@@ -97,7 +97,17 @@ export const getItem = async (id: string): Promise<{ data: Item.Item }> => {
 
 export const placeOption = async (
   option: "asks" | "bids",
-  payload: User.Option
+  payload: {
+    item: {
+      id: string;
+      name: string;
+    };
+    option: {
+      id: string;
+      name: string;
+      price: number;
+    };
+  }
 ) => {
   const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
     ?.localId;
@@ -116,7 +126,11 @@ export const placeOption = async (
               name: payload.option.name,
               options: [
                 ..._option.options,
-                { id: payload.option.id, price: payload.option.price },
+                {
+                  id: payload.option.id,
+                  price: payload.option.price,
+                  placer: token,
+                },
               ].sort((a, b) =>
                 option === "asks" ? a.price - b.price : b.price - a.price
               ),
@@ -171,6 +185,42 @@ export const deleteOption = async (
           .sort((a: any, b: any) => a.price - b.price)?.[0]?.price ?? null,
     });
   }
+};
+
+export const addTransaction = async (
+  option: "sell" | "buy",
+  payload: User.Option
+) => {
+  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
+    ?.localId;
+  const transactionId = getUuid();
+
+  const transactionRef = doc(db, "transaction", transactionId);
+  await setDoc(transactionRef, {
+    ...payload,
+    buyer: option === "sell" ? payload.option.placer : token,
+    seller: option === "buy" ? payload.option.placer : token,
+    open: false,
+    payment: false,
+    shipping: false,
+    shippingNumber: false,
+  });
+
+  const userRef = doc(db, "users", token);
+  await updateDoc(userRef, {
+    transaction: arrayUnion({
+      item: payload.item,
+      id: transactionId,
+    }),
+  });
+
+  const placerRef = doc(db, "users", payload.option.placer);
+  await updateDoc(placerRef, {
+    transaction: arrayUnion({
+      item: payload.item,
+      id: transactionId,
+    }),
+  });
 };
 
 export const getUser = async (): Promise<any> => {

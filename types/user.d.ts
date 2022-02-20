@@ -2,12 +2,14 @@ namespace User {
   type User = {
     asks: Option[];
     bids: Option[];
-    buying: [];
-    selling: [];
+    transaction: {
+      item: { id: string; name: string };
+      id: string;
+    }[];
     id: string;
   };
   type Option = {
     item: { id: string; name: string };
-    option: { id: string; name: string; price: number };
+    option: { id: string; name: string; price: number; placer: string };
   };
 }

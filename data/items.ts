@@ -7,11 +7,23 @@ const defaultValue = () => ({
   asks: [
     {
       name: "S",
-      options: [{ id: getUuid(), price: 2000000 }],
+      options: [
+        {
+          id: getUuid(),
+          price: 2000000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
+        },
+      ],
     },
     {
       name: "M",
-      options: [{ id: getUuid(), price: 2400000 }],
+      options: [
+        {
+          id: getUuid(),
+          price: 2400000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
+        },
+      ],
     },
     {
       name: "L",
@@ -19,6 +31,7 @@ const defaultValue = () => ({
         {
           id: getUuid(),
           price: 1800000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
         },
       ],
     },
@@ -28,6 +41,7 @@ const defaultValue = () => ({
         {
           id: getUuid(),
           price: 1400000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
         },
       ],
     },
@@ -39,6 +53,7 @@ const defaultValue = () => ({
         {
           id: getUuid(),
           price: 2300000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
         },
       ],
     },
@@ -48,6 +63,7 @@ const defaultValue = () => ({
         {
           id: getUuid(),
           price: 2700000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
         },
       ],
     },
@@ -57,6 +73,7 @@ const defaultValue = () => ({
         {
           id: getUuid(),
           price: 1900000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
         },
       ],
     },
@@ -66,6 +83,7 @@ const defaultValue = () => ({
         {
           id: getUuid(),
           price: 1900000,
+          placer: "OypOjNT10ZTZHXE39Cw8veSxyGz2",
         },
       ],
     },
