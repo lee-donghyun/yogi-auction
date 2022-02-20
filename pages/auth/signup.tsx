@@ -17,7 +17,7 @@ const SignUp: NextPage = () => {
   const [isAuthorized, load] = useAuth();
   const [selector, dispatch] = useStorage<{ auth: Auth.data }>();
   const { data, onChange, onSubmit, isLoading } = useForm(
-    { email: "", password: "" },
+    { email: "", password: "", address: "", bankAccount: "" },
     (data) =>
       postEmailSignUp(data)
         .then((res) => {
@@ -55,7 +55,9 @@ const SignUp: NextPage = () => {
               alert("다시 시도해 주세요.");
               break;
           }
-        })
+        }),
+    (data) =>
+      !!(data.email && data.password && data.address && data.bankAccount)
   );
 
   useEffect(() => {
@@ -101,6 +103,36 @@ const SignUp: NextPage = () => {
                   name="password"
                   onChange={onChange}
                   value={data.password}
+                  className="border rounded w-full p-2"
+                />
+              </div>
+            </div>
+            <div className="mt-5">
+              <div>
+                <label htmlFor="address">배송 주소</label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="address"
+                  type="text"
+                  name="address"
+                  onChange={onChange}
+                  value={data.address}
+                  className="border rounded w-full p-2"
+                />
+              </div>
+            </div>
+            <div className="mt-5">
+              <div>
+                <label htmlFor="bankAccount">정산 계좌</label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="bankAccount"
+                  type="text"
+                  name="bankAccount"
+                  onChange={onChange}
+                  value={data.bankAccount}
                   className="border rounded w-full p-2"
                 />
               </div>

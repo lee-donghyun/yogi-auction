@@ -22,6 +22,8 @@ identitytoolkit.interceptors.request.use(
 export const postEmailSignUp = async (form: {
   email: string;
   password: string;
+  bankAccount?: string;
+  address?: string;
 }) => {
   const data = await identitytoolkit.post<Auth.data>(`/v1/accounts:signUp`, {
     ...form,
