@@ -33,7 +33,7 @@ const RegisterItem: NextPage = () => {
             <h1 className="text-xl">상품 등록하기</h1>
           </div>
           <form onSubmit={onSubmit}>
-            <div className="p-5">
+            <div className="p-5 pb-0">
               <div>
                 <label htmlFor="name">상품명</label>
               </div>
@@ -49,7 +49,7 @@ const RegisterItem: NextPage = () => {
                 />
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 pb-0">
               <div>
                 <label htmlFor="description">상품 설명</label>
               </div>
@@ -65,7 +65,7 @@ const RegisterItem: NextPage = () => {
                 />
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 pb-0">
               <div>
                 <label htmlFor="name">상품 이미지</label>
               </div>
@@ -77,7 +77,7 @@ const RegisterItem: NextPage = () => {
                 />
               </div>
             </div>
-            <div className="px-5 pt-10 pb-24">
+            <div className="px-5 pt-14 pb-24">
               <Button
                 mode="fill"
                 theme={isValid ? undefined : "#ebebeb"}
