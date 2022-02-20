@@ -3,9 +3,11 @@ namespace Transaction {
     buyer: string;
     seller: string;
     open: boolean;
-    payment: boolean;
-    shipping: boolean;
     shippingNumber: boolean;
     createdAt: string;
+    payedAt: string | null;
+    sentAt: string | null;
+    arrivedAt: string | null;
   };
+  type Status = "CREATED" | "PAYED" | "SENT" | "ARRIVED";
 }

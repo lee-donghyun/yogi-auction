@@ -207,10 +207,11 @@ export const addTransaction = async (
     buyer: option === "sell" ? payload.option.placer : token,
     seller: option === "buy" ? payload.option.placer : token,
     open: false,
-    payment: false,
-    shipping: false,
     shippingNumber: false,
     createdAt,
+    payedAt: null,
+    sentAt: null,
+    arrivedAt: null,
   });
 
   const userRef = doc(db, "users", token);
@@ -240,10 +241,15 @@ export const getUser = async () => {
   return user.data();
 };
 
-export const getTransactions = async (): Promise<any> => {
-  const token = getToken();
-
-  const q = query(collection(db, "transaction"));
-  const transactionSnaps = await getDocs(q);
-  return transactionSnaps.docs.map((doc) => doc.data());
+export const getTransaction = async (id: string) => {
+  const transactionRef = doc(
+    db,
+    "transactions",
+    id
+  ) as DocumentReference<Transaction.Transaction>;
+  const transactionSnap = await getDoc(transactionRef);
+  if (!transactionSnap.exists()) {
+    throw new Error("transaction data does not exist");
+  }
+  return transactionSnap.data();
 };

@@ -8,6 +8,7 @@ type Props = {
   href?: UrlObject | string;
   replace?: boolean;
   submit?: boolean;
+  onClick?: () => any;
 };
 
 const Button: FC<Props> = ({
@@ -17,6 +18,7 @@ const Button: FC<Props> = ({
   children,
   replace,
   submit,
+  onClick,
 }) => {
   const style = `
         rounded w-full flex items-center justify-center h-14
@@ -41,6 +43,7 @@ const Button: FC<Props> = ({
       type={submit ? "submit" : "button"}
       className={style}
       style={{ backgroundColor: theme, borderColor: theme }}
+      onClick={onClick}
     >
       {children}
     </button>

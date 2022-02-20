@@ -3,9 +3,9 @@ import Link from "next/link";
 import { FC } from "react";
 import { VscChevronRight, VscSymbolArray } from "react-icons/vsc";
 import useSWR from "swr";
-import Naviagtion from "../components/Navigation";
-import SEO from "../components/SEO";
-import { getUser } from "../services/api/firebase";
+import Naviagtion from "../../components/Navigation";
+import SEO from "../../components/SEO";
+import { getUser } from "../../services/api/firebase";
 
 const Menu: NextPage = () => {
   const { data, isValidating } = useSWR("/user", getUser);
@@ -48,7 +48,9 @@ const TransactionItem: FC<{
       <div className="flex items-center justify-between p-4">
         <div>
           <p>{name}</p>
-          <p className="text-sm text-gray-400">{createdAt}</p>
+          <time dateTime={createdAt} className="text-sm text-gray-400">
+            {createdAt}
+          </time>
         </div>
         <VscChevronRight className="text-xl font-bold" />
       </div>
