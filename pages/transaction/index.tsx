@@ -8,7 +8,8 @@ import SEO from "../../components/SEO";
 import { getUser } from "../../services/api/firebase";
 
 const Menu: NextPage = () => {
-  const { data, isValidating } = useSWR("/user", getUser);
+  const { data, isValidating } = useSWR("/myinfo", getUser);
+
   return (
     <div>
       <SEO />

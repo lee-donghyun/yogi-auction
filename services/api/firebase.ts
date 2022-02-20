@@ -242,15 +242,13 @@ export const addTransaction = async (
   });
 };
 
-export const getUser = async (userId?: string) => {
-  const token = getToken();
-
-  const userRef = doc(
-    db,
-    "users",
-    userId ?? token
-  ) as DocumentReference<User.User>;
+export const getUser = async (key: string) => {
+  const userId = key === "/myinfo" ? getToken() : key;
+  const userRef = doc(db, "users", userId) as DocumentReference<User.User>;
   const user = await getDoc<User.User>(userRef);
+  if (!user.exists()) {
+    throw new Error("data does not exist");
+  }
   return user.data();
 };
 
