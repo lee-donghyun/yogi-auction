@@ -252,6 +252,12 @@ export const getUser = async (key: string) => {
   return user.data();
 };
 
+export const updateUser = async (payload: Partial<User.User>) => {
+  const token = getToken();
+  const userRef = doc(db, "users", token) as DocumentReference<User.User>;
+  await updateDoc(userRef, payload);
+};
+
 export const getTransaction = async (id: string) => {
   const transactionRef = doc(
     db,

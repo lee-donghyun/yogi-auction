@@ -14,6 +14,9 @@ const Menu: NextPage = () => {
       <div className="min-h-screen">
         <ul>
           <li>
+            <MenuItem href="/user" name="내 정보 수정" />
+          </li>
+          <li>
             <MenuItem href="/item/register" name="상품 등록" />
           </li>
           <li>

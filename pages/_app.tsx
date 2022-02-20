@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               "/asks",
               "/bids",
               "/transaction",
+              "/user",
             ]}
           >
             <Component {...pageProps} />
