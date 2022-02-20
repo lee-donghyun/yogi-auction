@@ -2,7 +2,7 @@ namespace User {
   type User = {
     asks: Option[];
     bids: Option[];
-    transaction: {
+    transactions: {
       item: { id: string; name: string };
       id: string;
       createdAt: string;

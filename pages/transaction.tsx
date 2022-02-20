@@ -8,19 +8,19 @@ import SEO from "../components/SEO";
 import { getUser } from "../services/api/firebase";
 
 const Menu: NextPage = () => {
-  const { data, isValidating } = useSWR<User.User>("/user", getUser);
+  const { data, isValidating } = useSWR("/user", getUser);
   return (
     <div>
       <SEO />
       <div className="min-h-screen">
-        {data && !isValidating && !data?.transaction.length && (
+        {data && !isValidating && !data?.transactions.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />
             <p className="mt-5 text-lg">진행중인 거래가 없습니다.</p>
           </div>
         )}
         <ul>
-          {data?.transaction.map((transaction) => (
+          {data?.transactions.map((transaction) => (
             <li key={transaction.id}>
               <TransactionItem
                 href={`/transaction/${transaction.id}`}

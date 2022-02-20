@@ -7,7 +7,6 @@ import {
   getDoc,
   collection,
   query,
-  orderBy,
   startAfter,
   limit,
   getDocs,
@@ -16,6 +15,7 @@ import {
   updateDoc,
   arrayUnion,
   DocumentReference,
+  CollectionReference,
 } from "firebase/firestore";
 import { getToken, getUuid } from "../utils";
 import dayjs from "dayjs";
@@ -42,13 +42,16 @@ export const uploadFile = async (file: File) => {
   return await getDownloadURL(imageRef);
 };
 
-export const addUser = (localId: string) =>
-  setDoc<User.User>(doc(db, "users", localId) as DocumentReference<User.User>, {
+export const addUser = async (localId: string) => {
+  const userRef = doc(db, "users", localId) as DocumentReference<User.User>;
+
+  await setDoc<User.User>(userRef, {
     id: localId,
     asks: [],
     bids: [],
-    transaction: [],
+    transactions: [],
   });
+};
 
 export const registerItem = async (_payload: Item.Register) => {
   const itemId = getUuid();
@@ -57,41 +60,42 @@ export const registerItem = async (_payload: Item.Register) => {
     bids: [],
     like: 0,
     lowestAsk: null,
-    releasedAt: Date.now(),
+    releasedAt: dayjs().format("YYYY/MM/DD HH:mm"),
     sold: 0,
     view: 0,
     ..._payload,
     id: itemId,
   };
-  await setDoc(doc(db, "items", itemId), payload);
+  await setDoc<Item.Item>(
+    doc(db, "items", itemId) as DocumentReference<Item.Item>,
+    payload
+  );
   return payload;
 };
 
 export const PAGE_SIZE = 24;
 export const getItems = async (
   bookmark: QueryDocumentSnapshot<DocumentData> | "INITIAL_REQUEST"
-): Promise<{
-  bookmark: QueryDocumentSnapshot<DocumentData> | null;
-  data: Item.Item[];
-}> => {
+) => {
+  const itemsRef = collection(db, "items") as CollectionReference<Item.Item>;
   const q =
     bookmark === "INITIAL_REQUEST"
-      ? query(collection(db, "items"), limit(PAGE_SIZE))
-      : query(collection(db, "items"), startAfter(bookmark), limit(PAGE_SIZE));
-  const documentSnapshots = await getDocs(q);
+      ? query<Item.Item>(itemsRef, limit(PAGE_SIZE))
+      : query<Item.Item>(itemsRef, startAfter(bookmark), limit(PAGE_SIZE));
+  const itemsSnap = await getDocs(q);
   return {
-    bookmark: documentSnapshots.docs[documentSnapshots.docs.length - 1],
-    data: documentSnapshots.docs.map((doc) => doc.data()) as any,
+    bookmark: itemsSnap.docs[itemsSnap.docs.length - 1],
+    data: itemsSnap.docs.map((doc) => doc.data()),
   };
 };
 
 export const getItem = async (id: string): Promise<{ data: Item.Item }> => {
-  const docRef = doc(db, "items", id);
-  const docSnap = await getDoc(docRef);
+  const docRef = doc(db, "items", id) as DocumentReference<Item.Item>;
+  const docSnap = await getDoc<Item.Item>(docRef);
   if (!docSnap.exists()) {
     throw new Error("no data exist");
   } else {
-    return { data: docSnap.data() as Item.Item };
+    return { data: docSnap.data() };
   }
 };
 
@@ -193,8 +197,12 @@ export const addTransaction = async (
   const transactionId = getUuid();
   const createdAt = dayjs().format("YYYY/MM/DD HH:mm");
 
-  const transactionRef = doc(db, "transaction", transactionId);
-  await setDoc(transactionRef, {
+  const transactionRef = doc(
+    db,
+    "transactions",
+    transactionId
+  ) as DocumentReference<Transaction.Transaction>;
+  await setDoc<Transaction.Transaction>(transactionRef, {
     ...payload,
     buyer: option === "sell" ? payload.option.placer : token,
     seller: option === "buy" ? payload.option.placer : token,
@@ -207,7 +215,7 @@ export const addTransaction = async (
 
   const userRef = doc(db, "users", token);
   await updateDoc(userRef, {
-    transaction: arrayUnion({
+    transactions: arrayUnion({
       item: payload.item,
       id: transactionId,
       createdAt,
@@ -216,7 +224,7 @@ export const addTransaction = async (
 
   const placerRef = doc(db, "users", payload.option.placer);
   await updateDoc(placerRef, {
-    transaction: arrayUnion({
+    transactions: arrayUnion({
       item: payload.item,
       id: transactionId,
       createdAt,
@@ -224,11 +232,11 @@ export const addTransaction = async (
   });
 };
 
-export const getUser = async (): Promise<any> => {
+export const getUser = async () => {
   const token = getToken();
 
-  const userRef = doc(db, "users", token);
-  const user = await getDoc(userRef);
+  const userRef = doc(db, "users", token) as DocumentReference<User.User>;
+  const user = await getDoc<User.User>(userRef);
   return user.data();
 };
 
