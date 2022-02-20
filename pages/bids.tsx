@@ -9,13 +9,13 @@ import { deleteOption, getUser } from "../services/api/firebase";
 import { formatPrice } from "../services/utils";
 
 const Bids: NextPage = () => {
-  const { data, mutate } = useSWR<User.User>("/bids", getUser);
+  const { data, mutate, isValidating } = useSWR<User.User>("/bids", getUser);
 
   return (
     <div>
       <SEO />
       <div className="min-h-screen">
-        {data && !data?.bids.length && (
+        {data && !isValidating && !data?.bids.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />
             <p className="mt-5 text-lg">구매 입찰 내역이 없습니다.</p>
