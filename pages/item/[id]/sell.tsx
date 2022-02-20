@@ -7,8 +7,8 @@ import type {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { VscLoading } from "react-icons/vsc";
 import Button from "../../../components/Button";
+import InlineLoading from "../../../components/InlineLoading";
 import SEO from "../../../components/SEO";
 import { addTransaction, getItem } from "../../../services/api/firebase";
 
@@ -77,11 +77,7 @@ const SellNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
             <div>
               <div className="mt-10">
                 <Button submit mode="fill">
-                  {isLoading ? (
-                    <VscLoading className="animate-spin mx-auto" />
-                  ) : (
-                    "판매"
-                  )}
+                  <InlineLoading isLoading={isLoading} label="판매" />
                 </Button>
               </div>
             </div>

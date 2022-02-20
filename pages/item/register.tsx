@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
 import Gallery from "../../components/Gallery";
+import InlineLoading from "../../components/InlineLoading";
 import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
 import { registerItem } from "../../services/api/firebase";
@@ -83,11 +83,7 @@ const RegisterItem: NextPage = () => {
                 theme={isValid ? undefined : "#ebebeb"}
                 submit
               >
-                {isLoading ? (
-                  <VscLoading className="animate-spin mx-auto" />
-                ) : (
-                  "등록하기"
-                )}
+                <InlineLoading isLoading={isLoading} label="등록하기" />
               </Button>
             </div>
           </form>

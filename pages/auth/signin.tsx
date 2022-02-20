@@ -2,9 +2,8 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { DebounceInput } from "react-debounce-input";
-import { VscLoading } from "react-icons/vsc";
 import Button from "../../components/Button";
+import InlineLoading from "../../components/InlineLoading";
 import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
 import { postEmailSingIn } from "../../services/api/identitytoolkit";
@@ -114,11 +113,7 @@ const SignIn: NextPage = () => {
                 회원가입
               </Button>
               <Button mode="fill" submit>
-                {isLoading ? (
-                  <VscLoading className="animate-spin mx-auto" />
-                ) : (
-                  "로그인"
-                )}
+                <InlineLoading isLoading={isLoading} label="로그인" />
               </Button>
             </div>
             <div className="mt-5">

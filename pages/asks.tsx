@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { VscClose, VscLoading, VscSymbolArray } from "react-icons/vsc";
 import useSWR from "swr";
 import Naviagtion from "../components/Navigation";

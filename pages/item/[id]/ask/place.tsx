@@ -6,8 +6,8 @@ import type {
 } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { VscLoading } from "react-icons/vsc";
 import Button from "../../../../components/Button";
+import InlineLoading from "../../../../components/InlineLoading";
 import SEO from "../../../../components/SEO";
 import { getItem, placeOption } from "../../../../services/api/firebase";
 import useForm from "../../../../services/hooks/useForm";
@@ -86,11 +86,7 @@ const PlaceAsk: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   mode="fill"
                   theme={isValid ? undefined : "#ebebeb"}
                 >
-                  {isLoading ? (
-                    <VscLoading className="animate-spin mx-auto" />
-                  ) : (
-                    "Place Ask"
-                  )}
+                  <InlineLoading isLoading={isLoading} label="Place Ask" />
                 </Button>
               </div>
             </div>
