@@ -150,10 +150,14 @@ const TransactionDetail: FC<{ swrKey: string }> = ({ swrKey }) => {
 
   return (
     <div className="min-h-screen pb-32">
-      <div className="p-5">
-        <h1 className="text-xl">{transaction?.item.name}</h1>
-        <p className="text mt-1">{transaction?.option.name}</p>
-      </div>
+      <Link href={`/item/${transaction?.item.id}`}>
+        <a>
+          <div className="p-5">
+            <h1 className="text-xl">{transaction?.item.name}</h1>
+            <p className="text mt-1">{transaction?.option.name}</p>
+          </div>
+        </a>
+      </Link>
       <div className="p-5">
         <Timeline
           past={timeline.filter((timeblock) => timeblock.status === "past")}
