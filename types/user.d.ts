@@ -1,5 +1,7 @@
 namespace User {
   type User = {
+    address: string;
+    bankAccount: string;
     asks: Option[];
     bids: Option[];
     transactions: {

@@ -19,6 +19,7 @@ import {
 } from "firebase/firestore";
 import { getToken, getUuid } from "../utils";
 import dayjs from "dayjs";
+import { DAYJS_FORMAT } from "../../data";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -42,7 +43,13 @@ export const uploadFile = async (file: File) => {
   return await getDownloadURL(imageRef);
 };
 
-export const addUser = async (localId: string) => {
+export const addUser = async (
+  localId: string,
+  payload: {
+    address: string;
+    bankAccount: string;
+  }
+) => {
   const userRef = doc(db, "users", localId) as DocumentReference<User.User>;
 
   await setDoc<User.User>(userRef, {
@@ -50,6 +57,8 @@ export const addUser = async (localId: string) => {
     asks: [],
     bids: [],
     transactions: [],
+    address: payload.address,
+    bankAccount: payload.bankAccount,
   });
 };
 
@@ -60,7 +69,7 @@ export const registerItem = async (_payload: Item.Register) => {
     bids: [],
     like: 0,
     lowestAsk: null,
-    releasedAt: dayjs().format("YYYY/MM/DD HH:mm"),
+    releasedAt: dayjs().format(DAYJS_FORMAT),
     sold: 0,
     view: 0,
     ..._payload,
@@ -195,7 +204,7 @@ export const addTransaction = async (
 ) => {
   const token = getToken();
   const transactionId = getUuid();
-  const createdAt = dayjs().format("YYYY/MM/DD HH:mm");
+  const createdAt = dayjs().format(DAYJS_FORMAT);
 
   const transactionRef = doc(
     db,
@@ -233,10 +242,14 @@ export const addTransaction = async (
   });
 };
 
-export const getUser = async () => {
+export const getUser = async (userId?: string) => {
   const token = getToken();
 
-  const userRef = doc(db, "users", token) as DocumentReference<User.User>;
+  const userRef = doc(
+    db,
+    "users",
+    userId ?? token
+  ) as DocumentReference<User.User>;
   const user = await getDoc<User.User>(userRef);
   return user.data();
 };
@@ -252,4 +265,16 @@ export const getTransaction = async (id: string) => {
     throw new Error("transaction data does not exist");
   }
   return transactionSnap.data();
+};
+
+export const updateTransaction = async (
+  id: string,
+  payload: Partial<Transaction.Transaction>
+) => {
+  const transactionRef = doc(
+    db,
+    "transactions",
+    id
+  ) as DocumentReference<Transaction.Transaction>;
+  await updateDoc(transactionRef, payload);
 };

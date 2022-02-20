@@ -22,14 +22,17 @@ identitytoolkit.interceptors.request.use(
 export const postEmailSignUp = async (form: {
   email: string;
   password: string;
-  bankAccount?: string;
-  address?: string;
+  bankAccount: string;
+  address: string;
 }) => {
   const data = await identitytoolkit.post<Auth.data>(`/v1/accounts:signUp`, {
     ...form,
     returnSecureToken: true,
   });
-  await addUser(data.data.localId);
+  await addUser(data.data.localId, {
+    bankAccount: form.bankAccount,
+    address: form.address,
+  });
   return data;
 };
 
