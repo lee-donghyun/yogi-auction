@@ -6,5 +6,6 @@ namespace Transaction {
     payment: boolean;
     shipping: boolean;
     shippingNumber: boolean;
+    createdAt: string;
   };
 }

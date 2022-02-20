@@ -5,6 +5,7 @@ namespace User {
     transaction: {
       item: { id: string; name: string };
       id: string;
+      createdAt: string;
     }[];
     id: string;
   };

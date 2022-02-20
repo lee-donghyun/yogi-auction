@@ -7,3 +7,6 @@ export const getUuid = () => {
 };
 
 export const formatPrice = (price: number) => `₩${price.toLocaleString()}`;
+
+export const getToken = () =>
+  JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth?.localId;

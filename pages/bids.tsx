@@ -9,7 +9,7 @@ import { deleteOption, getUser } from "../services/api/firebase";
 import { formatPrice } from "../services/utils";
 
 const Bids: NextPage = () => {
-  const { data, mutate, isValidating } = useSWR<User.User>("/bids", getUser);
+  const { data, mutate, isValidating } = useSWR<User.User>("/user", getUser);
 
   return (
     <div>

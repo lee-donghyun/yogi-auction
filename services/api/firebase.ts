@@ -15,9 +15,10 @@ import {
   QueryDocumentSnapshot,
   updateDoc,
   arrayUnion,
-  arrayRemove,
+  DocumentReference,
 } from "firebase/firestore";
-import { getUuid } from "../utils";
+import { getToken, getUuid } from "../utils";
+import dayjs from "dayjs";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -42,12 +43,11 @@ export const uploadFile = async (file: File) => {
 };
 
 export const addUser = (localId: string) =>
-  setDoc(doc(db, "users", localId), {
+  setDoc<User.User>(doc(db, "users", localId) as DocumentReference<User.User>, {
     id: localId,
     asks: [],
     bids: [],
-    buying: [],
-    selling: [],
+    transaction: [],
   });
 
 export const registerItem = async (_payload: Item.Register) => {
@@ -109,8 +109,7 @@ export const placeOption = async (
     };
   }
 ) => {
-  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
-    ?.localId;
+  const token = getToken();
 
   const userRef = doc(db, "users", token);
   await updateDoc(userRef, { [option]: arrayUnion(payload) });
@@ -148,8 +147,7 @@ export const deleteOption = async (
   option: "asks" | "bids",
   payload: User.Option
 ) => {
-  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
-    ?.localId;
+  const token = getToken();
 
   const userRef = doc(db, "users", token);
   const userSnap = await getDoc(userRef);
@@ -191,9 +189,9 @@ export const addTransaction = async (
   option: "sell" | "buy",
   payload: User.Option
 ) => {
-  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
-    ?.localId;
+  const token = getToken();
   const transactionId = getUuid();
+  const createdAt = dayjs().format("YYYY/MM/DD HH:mm");
 
   const transactionRef = doc(db, "transaction", transactionId);
   await setDoc(transactionRef, {
@@ -204,6 +202,7 @@ export const addTransaction = async (
     payment: false,
     shipping: false,
     shippingNumber: false,
+    createdAt,
   });
 
   const userRef = doc(db, "users", token);
@@ -211,6 +210,7 @@ export const addTransaction = async (
     transaction: arrayUnion({
       item: payload.item,
       id: transactionId,
+      createdAt,
     }),
   });
 
@@ -219,15 +219,23 @@ export const addTransaction = async (
     transaction: arrayUnion({
       item: payload.item,
       id: transactionId,
+      createdAt,
     }),
   });
 };
 
 export const getUser = async (): Promise<any> => {
-  const token = JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth
-    ?.localId;
+  const token = getToken();
 
   const userRef = doc(db, "users", token);
   const user = await getDoc(userRef);
   return user.data();
+};
+
+export const getTransactions = async (): Promise<any> => {
+  const token = getToken();
+
+  const q = query(collection(db, "transaction"));
+  const transactionSnaps = await getDocs(q);
+  return transactionSnaps.docs.map((doc) => doc.data());
 };

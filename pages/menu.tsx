@@ -17,7 +17,7 @@ const Menu: NextPage = () => {
             <MenuItem href="/item/register" name="상품 등록" />
           </li>
           <li>
-            <MenuItem href="/" name="진행 중 거래" />
+            <MenuItem href="/transaction" name="진행 중 거래" />
           </li>
           <li>
             <MenuItem href="/bids" name="구매 입찰 내역" />
