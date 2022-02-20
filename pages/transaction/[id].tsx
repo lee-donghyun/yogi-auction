@@ -56,13 +56,17 @@ const TransactionDetail: FC<{ swrKey: string }> = ({ swrKey }) => {
     {
       time: transaction?.payedAt ?? "48시간 이내",
       title: "입금",
-      content: `구매자가 판매자의 정산 계좌(${seller?.bankAccount})에 낙찰 금액을 입금합니다.`,
+      content: `구매자가 판매자의 정산 계좌(${
+        seller?.bankAccount ?? "   "
+      })에 낙찰 금액을 입금합니다.`,
       status: transaction?.payedAt ? "past" : "future",
     },
     {
       time: transaction?.sentAt ?? "48시간 이내",
       title: "발송",
-      content: `판매자가 구매자의 주소(${buyer?.address})에 상품을 발송합니다.`,
+      content: `판매자가 구매자의 주소(${
+        buyer?.address ?? "   "
+      })에 상품을 발송합니다.`,
       status: transaction?.sentAt ? "past" : "future",
     },
     {
@@ -206,7 +210,7 @@ export const getStaticProps: GetStaticProps<{
       props: {
         swrKey: id,
         fallback: {
-          id: transaction,
+          [id]: transaction,
         },
       },
     };
