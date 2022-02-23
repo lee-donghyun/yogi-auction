@@ -67,7 +67,7 @@ const SignIn: NextPage = () => {
   return (
     <div>
       <SEO />
-      <div className="min-h-screen">
+      <div className="pb-36 min-h-screen">
         <div className="px-5">
           <img
             src="/images/brand.png"

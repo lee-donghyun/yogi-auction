@@ -13,7 +13,7 @@ const Menu: NextPage = () => {
   return (
     <div>
       <SEO />
-      <div className="min-h-screen">
+      <div className="pb-64 min-h-screen">
         <div className="p-5">
           <h1 className="text-xl">진행중인 거래</h1>
         </div>

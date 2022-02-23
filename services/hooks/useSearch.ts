@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { items as serverItems } from "../../data/items";
 import useStorage from "./useStorage";
 import useSWRInfinite from "swr/infinite";
 import { getQueriedItems, PAGE_SIZE } from "../api/firebase";

@@ -11,7 +11,7 @@ const Menu: NextPage = () => {
   return (
     <div>
       <SEO />
-      <div className="min-h-screen">
+      <div className="pb-36 min-h-screen">
         <ul>
           <li>
             <MenuItem href="/user" name="내 정보 수정" />

@@ -34,7 +34,7 @@ const User: NextPage = () => {
   return (
     <div>
       <SEO />
-      <div className="min-h-screen">
+      <div className="pb-36 min-h-screen">
         <div className="p-5">
           <h1 className="text-xl">내 정보 수정</h1>
         </div>

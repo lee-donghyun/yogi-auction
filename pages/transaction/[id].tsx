@@ -13,6 +13,7 @@ import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
 import Timeline, { TimelineData } from "../../components/Timeline";
 import {
+  deleteOption,
   getTransaction,
   getUser,
   updateTransaction,
@@ -103,6 +104,13 @@ const TransactionDetail: FC<{ swrKey: string }> = ({ swrKey }) => {
           await updateTransaction(swrKey, {
             payedAt: dayjs().format(DAYJS_FORMAT),
           });
+          await deleteOption(
+            transaction?.option.placer === buyer ? "bids" : "asks",
+            {
+              item: transaction?.item as any,
+              option: transaction?.option as any,
+            }
+          );
           await mutate();
         }
       } catch (error) {
@@ -154,7 +162,7 @@ const TransactionDetail: FC<{ swrKey: string }> = ({ swrKey }) => {
   };
 
   return (
-    <div className="min-h-screen pb-32">
+    <div className="pb-64 min-h-screen">
       <Link href={`/item/${transaction?.item.id}`}>
         <a>
           <div className="p-5">

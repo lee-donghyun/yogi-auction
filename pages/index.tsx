@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <SEO />
-      <div className="pb-[86px] min-h-screen">
+      <div className="pb-36 min-h-screen">
         <div className="my-16 p-5 pt-0">
           <div className="mb-7">
             <img src="/images/brand.png" alt="" className="w-28 h-28 mx-auto" />

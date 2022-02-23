@@ -14,8 +14,8 @@ const Trade: FC<Props> = ({ options, render: Footer }) => {
   );
 
   return (
-    <div className="p-5 pb-64 min-h-screen">
-      <div>
+    <div className="pb-36 min-h-screen">
+      <div className="px-5">
         {options.map((option) => (
           <Option
             key={option.name}

@@ -28,7 +28,7 @@ const RegisterItem: NextPage = () => {
   return (
     <>
       <SEO />
-      <div className="min-h-screen">
+      <div className="pb-36 min-h-screen">
         <div>
           <div className="p-5">
             <h1 className="text-xl">상품 등록</h1>
