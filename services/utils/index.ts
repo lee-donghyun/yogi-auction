@@ -10,3 +10,8 @@ export const formatPrice = (price: number) => `₩${price.toLocaleString()}`;
 
 export const getToken = (): string =>
   JSON.parse(localStorage.getItem("USE_STORAGE") ?? "{}")?.auth?.localId;
+
+export const getParams = (asPath: string, key: string) => {
+  const sp = new URLSearchParams(asPath.split("?")?.[1]);
+  return sp.get(key);
+};

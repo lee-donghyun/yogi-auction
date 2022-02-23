@@ -16,6 +16,7 @@ import {
   arrayUnion,
   DocumentReference,
   CollectionReference,
+  where,
 } from "firebase/firestore";
 import { getToken, getUuid } from "../utils";
 import dayjs from "dayjs";
@@ -91,6 +92,31 @@ export const getItems = async (
     bookmark === "INITIAL_REQUEST"
       ? query<Item.Item>(itemsRef, limit(PAGE_SIZE))
       : query<Item.Item>(itemsRef, startAfter(bookmark), limit(PAGE_SIZE));
+  const itemsSnap = await getDocs(q);
+  return {
+    bookmark: itemsSnap.docs[itemsSnap.docs.length - 1],
+    data: itemsSnap.docs.map((doc) => doc.data()),
+  };
+};
+
+export const getQueriedItems = async (key: {
+  bookmark: QueryDocumentSnapshot<DocumentData> | "INITIAL_REQUEST";
+  query?: string;
+}) => {
+  const itemsRef = collection(db, "items") as CollectionReference<Item.Item>;
+  const q =
+    key.bookmark === "INITIAL_REQUEST"
+      ? query<Item.Item>(
+          itemsRef,
+          limit(PAGE_SIZE),
+          where("name", "==", key.query)
+        )
+      : query<Item.Item>(
+          itemsRef,
+          startAfter(key.bookmark),
+          limit(PAGE_SIZE),
+          where("name", "==", key.query)
+        );
   const itemsSnap = await getDocs(q);
   return {
     bookmark: itemsSnap.docs[itemsSnap.docs.length - 1],

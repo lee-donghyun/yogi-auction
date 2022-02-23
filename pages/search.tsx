@@ -10,7 +10,7 @@ import useSearch from "../services/hooks/useSearch";
 
 const Search: NextPage = () => {
   const search = useSearch();
-  const { items, isLoading, isEmpty, loadMore } = search;
+  const { items, isLoading, isEmpty, isReachingEnd, loadMore } = search;
 
   const observer = useObserver(loadMore);
 
@@ -22,7 +22,7 @@ const Search: NextPage = () => {
         <div className="py-[86px] min-h-screen">
           {items.length > 0 && <ItemList items={items} />}
           {isLoading && <ItemListSkeleton />}
-          {isEmpty && <ItemListEmpty />}
+          {(isReachingEnd || isEmpty) && <ItemListEmpty />}
           <div ref={observer} className="translate-y-[-80vh]" />
         </div>
       </div>

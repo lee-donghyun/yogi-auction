@@ -15,7 +15,7 @@ const SearchInput: FC<UseSearch> = ({
 
   const [recentKeywords, setRecentKeywords] = useRecentKeywords;
 
-  const [isKeywordsOpen, setIsKeywordsOpen] = useState(true);
+  const [isKeywordsOpen, setIsKeywordsOpen] = useState(!query);
 
   return (
     <div
@@ -45,7 +45,7 @@ const SearchInput: FC<UseSearch> = ({
             value={query}
             onChange={onChange}
             list="recommends"
-            autoFocus
+            autoFocus={!query}
             onFocus={() => setIsKeywordsOpen(true)}
             style={isKeywordsOpen ? { paddingLeft: "2.5rem" } : undefined}
           />
@@ -68,7 +68,7 @@ const SearchInput: FC<UseSearch> = ({
                         setIsKeywordsOpen(false);
                         router.replace({
                           pathname: "/search",
-                          query: { q: keyword, n: Date.now() },
+                          query: { q: keyword },
                         });
                       }}
                     >
@@ -94,7 +94,7 @@ const SearchInput: FC<UseSearch> = ({
                         setIsKeywordsOpen(false);
                         router.replace({
                           pathname: "/search",
-                          query: { q: keyword, n: Date.now() },
+                          query: { q: keyword },
                         });
                       }}
                     >

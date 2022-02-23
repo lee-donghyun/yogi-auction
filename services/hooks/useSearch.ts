@@ -2,6 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { items as serverItems } from "../../data/items";
 import useStorage from "./useStorage";
+import useSWRInfinite from "swr/infinite";
+import { getQueriedItems, PAGE_SIZE } from "../api/firebase";
+import { getParams } from "../utils";
 
 export type UseSearch = {
   items: Item.Item[];
@@ -10,6 +13,7 @@ export type UseSearch = {
   onChange: (e: any) => void;
   onSubmit: (e: any) => void;
   isLoading: boolean;
+  isReachingEnd: boolean;
   isEmpty: boolean;
   loadMore: () => void;
   useRecentKeywords: [
@@ -18,19 +22,33 @@ export type UseSearch = {
   ];
 };
 
+const getKey = (query: string | null) => (index: any, prevData: any) =>
+  query
+    ? {
+        bookmark: index ? prevData.bookmark : "INITIAL_REQUEST",
+        query,
+      }
+    : null;
+
 const useSearch = (): UseSearch => {
   const router = useRouter();
   const [selector, dispatch] = useStorage<{ recentKeywords: string[] }>();
 
-  const sp = new URLSearchParams(router.asPath.split("?")?.[1]);
-  const [query, setQuery] = useState<string>(sp?.get("q") ?? "");
+  const queryParams = getParams(router.asPath, "q");
+  const [query, setQuery] = useState<string>(queryParams ?? "");
   const [recommends, setRecommends] = useState<string[]>([]);
 
-  const [items, setItems] = useState<Item.Item[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
+  const { data, error, size, setSize } = useSWRInfinite(
+    getKey(queryParams),
+    getQueriedItems
+  );
+  const items = data?.flatMap(({ data }) => data) ?? [];
+  const isLoading =
+    !!queryParams &&
+    (!data || (size > 0 && data && typeof data[size - 1] === "undefined"));
+  const isEmpty = data?.[0]?.data?.length === 0;
+  const isReachingEnd =
+    isEmpty || !!(data && data[data.length - 1]?.data?.length < PAGE_SIZE);
 
   const recentKeywords = selector("recentKeywords");
   const dispatchRecentKeywords = (keyword: string, contain: boolean = true) =>
@@ -46,50 +64,18 @@ const useSearch = (): UseSearch => {
     e.preventDefault();
     e.stopPropagation();
     (document.activeElement as HTMLElement).blur();
+    dispatchRecentKeywords(query);
     router.push({
       pathname: "/search",
-      query: { ...router.query, q: query, n: Date.now() },
+      query: { q: query },
     });
   };
 
   const loadMore = () => {
-    if (isLoading) {
-      return;
-    }
-    if (page >= totalPage) {
-      return;
-    }
-    if (typeof router.query.q === "string") {
-      setIsLoading(true);
-      getItem(router.query.q, page + 1)
-        .then((res) => {
-          setItems([...items, ...res.items]);
-          setPage(res.page);
-        })
-        .catch((err) => console.error(err))
-        .finally(() => setIsLoading(false));
+    if (!isReachingEnd && !isLoading) {
+      setSize(size + 1);
     }
   };
-
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-    if (typeof router.query.q === "string" && !!router.query?.q) {
-      dispatchRecentKeywords(query);
-      setIsLoading(true);
-      setIsEmpty(false);
-      setItems([]);
-      getItem(router.query.q, 1)
-        .then((res) => {
-          setItems(res.items);
-          setTotalPage(res.totalPage);
-          setIsEmpty(!res.count);
-        })
-        .catch((err) => console.error(err))
-        .finally(() => setIsLoading(false));
-    }
-  }, [router.query.n]);
 
   useEffect(() => {
     if (query) {
@@ -107,19 +93,19 @@ const useSearch = (): UseSearch => {
     onSubmit,
     isLoading,
     isEmpty,
+    isReachingEnd,
     loadMore,
     useRecentKeywords: [recentKeywords, dispatchRecentKeywords],
   };
 };
 
-const getItem = async (query: string, page: number): Promise<Item.List> => {
-  await new Promise<void>((res) => setTimeout(res, 2000));
-  const result = serverItems().sort(() => Math.random() - 0.5);
-  return { items: result, count: 12, page, totalPage: 48 };
-};
-
 const getRecommend = async (query: string) => {
-  return ["recomends", "related", "to", "query"];
+  return [
+    "로고 프린트 스트라이프 스웨트셔츠",
+    "스톤워싱 와이드 진",
+    "엠보스드 로고 티셔츠",
+    "V넥 니트 베스트",
+  ];
 };
 
 export default useSearch;

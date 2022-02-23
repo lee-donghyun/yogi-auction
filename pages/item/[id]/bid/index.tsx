@@ -33,7 +33,8 @@ const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </Button>
               <Button
                 href={{
-                  pathname: `/checkout`,
+                  pathname: `/item/${item.id}/buy`,
+                  query: { option: selected },
                 }}
                 mode="fill"
               >
