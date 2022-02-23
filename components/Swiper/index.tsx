@@ -10,7 +10,7 @@ type Props = {
 };
 const Swiper: FC<Props> = ({ images }) => {
   return (
-    <SwiperContainer loop>
+    <SwiperContainer loop className="w-full">
       {images.map((image) => (
         <SwiperSlide key={image}>
           <img

@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
         <title>요기옥션</title>
       </Head>
-      <div className="xl:p-32">
+      <div>
         <RecoilRoot>
           <Auth
             pages={[

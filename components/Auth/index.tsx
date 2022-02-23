@@ -34,7 +34,7 @@ const Auth: React.FC<Props> = ({ children, pages }) => {
     return (
       <div>
         <SEO />
-        <div className="min-h-screen">
+        <div className="pb-36 min-h-screen max-w-lg mx-auto">
           <div className="px-5">
             <img
               src="/images/brand.png"

@@ -2,7 +2,7 @@ const ItemListSkeleton = ({}) => {
   return (
     <div className="">
       <div className="mt-5">
-        <div className="grid grid-cols-2 px-5 gap-x-3 gap-y-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 px-5 gap-x-3 lg:gap-x-10 gap-y-8 lg:gap-y-10">
           {Array(10)
             .fill(1)
             .map((_, i) => (
