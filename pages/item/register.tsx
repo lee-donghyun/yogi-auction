@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Button from "../../components/Button";
 import Gallery from "../../components/Gallery";
@@ -30,7 +31,7 @@ const RegisterItem: NextPage = () => {
       <div className="min-h-screen">
         <div>
           <div className="p-5">
-            <h1 className="text-xl">상품 등록하기</h1>
+            <h1 className="text-xl">상품 등록</h1>
           </div>
           <form onSubmit={onSubmit}>
             <div className="p-5 pb-0">
@@ -88,8 +89,13 @@ const RegisterItem: NextPage = () => {
             </div>
           </form>
         </div>
-
-        <Naviagtion />
+        <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
+          <Link href={`/menu`}>
+            <a className="ml-5 h-full w-fit flex items-center">
+              <span>{`< 메뉴`}</span>
+            </a>
+          </Link>
+        </div>
       </div>
     </>
   );

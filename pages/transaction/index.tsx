@@ -14,6 +14,9 @@ const Menu: NextPage = () => {
     <div>
       <SEO />
       <div className="min-h-screen">
+        <div className="p-5">
+          <h1 className="text-xl">진행중인 거래</h1>
+        </div>
         {data && !isValidating && !data?.transactions.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />
@@ -32,7 +35,13 @@ const Menu: NextPage = () => {
           ))}
         </ul>
       </div>
-      <Naviagtion />
+      <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
+        <Link href={`/menu`}>
+          <a className="ml-5 h-full w-fit flex items-center">
+            <span>{`< 메뉴`}</span>
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };

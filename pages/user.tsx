@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useEffect } from "react";
 import useSWR from "swr";
 import Button from "../components/Button";
@@ -87,7 +88,13 @@ const User: NextPage = () => {
           </form>
         </div>
       </div>
-      <Naviagtion />
+      <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
+        <Link href={`/menu`}>
+          <a className="ml-5 h-full w-fit flex items-center">
+            <span>{`< 메뉴`}</span>
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };

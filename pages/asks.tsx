@@ -15,6 +15,9 @@ const Asks: NextPage = () => {
     <div>
       <SEO />
       <div className="min-h-screen">
+        <div className="p-5">
+          <h1 className="text-xl">판매 입찰 내역</h1>
+        </div>
         {data && !isValidating && !data?.asks.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />
@@ -29,7 +32,13 @@ const Asks: NextPage = () => {
           ))}
         </ul>
       </div>
-      <Naviagtion />
+      <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
+        <Link href={`/menu`}>
+          <a className="ml-5 h-full w-fit flex items-center">
+            <span>{`< 메뉴`}</span>
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };
@@ -58,7 +67,7 @@ const ItemOption: FC<{ option: User.Option; mutate: () => Promise<any> }> = ({
   return (
     <Link href={`/item/${option.item.id}`}>
       <a>
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between py-3 px-5">
           <div>
             <p>{option.item.name}</p>
             <p className="text-sm mt-1">
