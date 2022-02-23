@@ -28,25 +28,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <div className="mt-4 flex gap-x-4 items-start">
             <div className="w-full">
               <Button href={`/item/${item.id}/ask`} replace>
-                Ask
-              </Button>
-              <div className="mt-3 mr-2">
-                {item.asks
-                  .filter((ask) => ask.options.length)
-                  .slice(0, 3)
-                  .map((ask) => (
-                    <p
-                      className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
-                      key={ask.name}
-                    >
-                      {ask.name} - {formatPrice(ask.options[0].price)}
-                    </p>
-                  ))}
-              </div>
-            </div>
-            <div className="w-full">
-              <Button mode="fill" href={`/item/${item.id}/bid`} replace>
-                Bid
+                Sell
               </Button>
               <div className="mt-3 mr-2">
                 {item.bids
@@ -58,6 +40,24 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                       key={bid.name}
                     >
                       {bid.name} - {formatPrice(bid.options[0].price)}
+                    </p>
+                  ))}
+              </div>
+            </div>
+            <div className="w-full">
+              <Button mode="fill" href={`/item/${item.id}/bid`} replace>
+                Buy
+              </Button>
+              <div className="mt-3 mr-2">
+                {item.asks
+                  .filter((ask) => ask.options.length)
+                  .slice(0, 3)
+                  .map((ask) => (
+                    <p
+                      className="text-xs text-gray-400 whitespace-pre overflow-hidden text-ellipsis text-right mt-px"
+                      key={ask.name}
+                    >
+                      {ask.name} - {formatPrice(ask.options[0].price)}
                     </p>
                   ))}
               </div>

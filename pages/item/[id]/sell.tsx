@@ -24,7 +24,7 @@ const SellNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       e.preventDefault();
       setIsLoading(true);
       const { id, placer, price } =
-        item.asks.find((ask) => ask.name === option)?.options[0] ?? {};
+        item.bids.find((bid) => bid.name === option)?.options[0] ?? {};
       await addTransaction("sell", {
         item: {
           id: item.id,
@@ -57,18 +57,18 @@ const SellNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <form onSubmit={onSubmit} autoComplete="off" noValidate>
             <div>
               <div>
-                <label htmlFor="ask-price">판매가</label>
+                <label htmlFor="bid-price">판매가</label>
               </div>
               <div className="relative mt-2">
                 <span className="absolute left-2 top-1/2 -translate-y-1/2">
                   ₩
                 </span>
                 <input
-                  id="ask-price"
+                  id="bid-price"
                   readOnly
                   className="border rounded w-full p-2 text-right"
                   value={Number(
-                    item.asks.find((ask) => ask.name === option)?.options[0]
+                    item.bids.find((bid) => bid.name === option)?.options[0]
                       .price
                   ).toLocaleString()}
                 />
