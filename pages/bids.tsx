@@ -18,7 +18,7 @@ const Bids: NextPage = () => {
         <div className="p-5">
           <h1 className="text-xl">구매 입찰 내역</h1>
         </div>
-        {(!data || (data.asks.length === 0 && isValidating)) &&
+        {(!data || (data.bids.length === 0 && isValidating)) &&
           Array(4)
             .fill(0)
             .map((_, i) => <Skeleton.List key={i} />)}

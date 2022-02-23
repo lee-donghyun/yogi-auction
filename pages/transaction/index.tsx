@@ -17,7 +17,7 @@ const Menu: NextPage = () => {
         <div className="p-5">
           <h1 className="text-xl">진행중인 거래</h1>
         </div>
-        {(!data || (data.asks.length === 0 && isValidating)) &&
+        {(!data || (data.transactions.length === 0 && isValidating)) &&
           Array(4)
             .fill(0)
             .map((_, i) => <Skeleton.List key={i} />)}

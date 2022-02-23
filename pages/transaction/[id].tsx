@@ -22,6 +22,7 @@ import { getToken } from "../../services/utils";
 import dayjs from "dayjs";
 import { DAYJS_FORMAT } from "../../data";
 import InlineLoading from "../../components/InlineLoading";
+import TimelineSkeleton from "../../components/Timeline/skeleton";
 
 const TransactionDetailPage: NextPage<
   InferGetStaticPropsType<typeof getStaticProps>
@@ -163,10 +164,15 @@ const TransactionDetail: FC<{ swrKey: string }> = ({ swrKey }) => {
         </a>
       </Link>
       <div className="p-5">
-        <Timeline
-          past={timeline.filter((timeblock) => timeblock.status === "past")}
-          future={timeline.filter((timeblock) => timeblock.status === "future")}
-        />
+        {(!buyer || !seller) && <TimelineSkeleton />}
+        {!!buyer && !!seller && (
+          <Timeline
+            past={timeline.filter((timeblock) => timeblock.status === "past")}
+            future={timeline.filter(
+              (timeblock) => timeblock.status === "future"
+            )}
+          />
+        )}
       </div>
       <div className="p-5">
         {isBuyer && status === "CREATED" && (
