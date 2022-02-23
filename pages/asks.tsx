@@ -3,8 +3,8 @@ import Link from "next/link";
 import { FC, useState } from "react";
 import { VscClose, VscLoading, VscSymbolArray } from "react-icons/vsc";
 import useSWR from "swr";
-import Naviagtion from "../components/Navigation";
 import SEO from "../components/SEO";
+import Skeleton from "../components/Skeleton";
 import { deleteOption, getUser } from "../services/api/firebase";
 import { formatPrice } from "../services/utils";
 
@@ -18,6 +18,10 @@ const Asks: NextPage = () => {
         <div className="p-5">
           <h1 className="text-xl">판매 입찰 내역</h1>
         </div>
+        {(!data || (data.asks.length === 0 && isValidating)) &&
+          Array(4)
+            .fill(0)
+            .map((_, i) => <Skeleton.List key={i} />)}
         {data && !isValidating && !data?.asks.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />

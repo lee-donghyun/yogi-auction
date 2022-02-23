@@ -3,8 +3,8 @@ import Link from "next/link";
 import { FC } from "react";
 import { VscChevronRight, VscSymbolArray } from "react-icons/vsc";
 import useSWR from "swr";
-import Naviagtion from "../../components/Navigation";
 import SEO from "../../components/SEO";
+import Skeleton from "../../components/Skeleton";
 import { getUser } from "../../services/api/firebase";
 
 const Menu: NextPage = () => {
@@ -17,6 +17,10 @@ const Menu: NextPage = () => {
         <div className="p-5">
           <h1 className="text-xl">진행중인 거래</h1>
         </div>
+        {(!data || (data.asks.length === 0 && isValidating)) &&
+          Array(4)
+            .fill(0)
+            .map((_, i) => <Skeleton.List key={i} />)}
         {data && !isValidating && !data?.transactions.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />
@@ -55,7 +59,7 @@ const TransactionItem: FC<{
 }> = ({ href, name, createdAt }) => (
   <Link href={href}>
     <a>
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between py-3 px-5">
         <div>
           <p>{name}</p>
           <time dateTime={createdAt} className="text-sm text-gray-400">

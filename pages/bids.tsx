@@ -3,8 +3,8 @@ import Link from "next/link";
 import { FC, useState } from "react";
 import { VscClose, VscLoading, VscSymbolArray } from "react-icons/vsc";
 import useSWR from "swr";
-import Naviagtion from "../components/Navigation";
 import SEO from "../components/SEO";
+import Skeleton from "../components/Skeleton";
 import { deleteOption, getUser } from "../services/api/firebase";
 import { formatPrice } from "../services/utils";
 
@@ -18,6 +18,10 @@ const Bids: NextPage = () => {
         <div className="p-5">
           <h1 className="text-xl">구매 입찰 내역</h1>
         </div>
+        {(!data || (data.asks.length === 0 && isValidating)) &&
+          Array(4)
+            .fill(0)
+            .map((_, i) => <Skeleton.List key={i} />)}
         {data && !isValidating && !data?.bids.length && (
           <div className="pt-20 flex flex-col items-center justify-center">
             <VscSymbolArray className="text-2xl" />
@@ -67,7 +71,7 @@ const ItemOption: FC<{ option: User.Option; mutate: () => Promise<any> }> = ({
   return (
     <Link href={`/item/${option.item.id}`}>
       <a>
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between py-3 px-5">
           <div>
             <p>{option.item.name}</p>
             <p className="text-sm mt-1">
