@@ -1,3 +1,5 @@
+import { getItem } from "../api/firebase";
+
 export const getUuid = () => {
   return "xxxxxxxx".replace(/[xy]/g, (c) => {
     let r = (Math.random() * 16) | 0;
@@ -15,3 +17,6 @@ export const getParams = (asPath: string, key: string) => {
   const sp = new URLSearchParams(asPath.split("?")?.[1]);
   return sp.get(key);
 };
+
+export const getItemQuery = (key: string) =>
+  getItem(key).then((res) => res.data);
