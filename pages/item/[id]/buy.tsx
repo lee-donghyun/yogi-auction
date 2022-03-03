@@ -7,14 +7,19 @@ import type {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import useSWR from "swr";
 import Button from "../../../components/Button";
 import InlineLoading from "../../../components/InlineLoading";
 import SEO from "../../../components/SEO";
 import { addTransaction, getItem } from "../../../services/api/firebase";
+import { getItemQuery } from "../../../services/utils";
 
 const BuyNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  item,
+  item: fallbackData,
 }) => {
+  const { data: item } = useSWR(fallbackData.id, getItemQuery, {
+    fallbackData,
+  });
   const router = useRouter();
   const { option } = router.query;
 
@@ -24,11 +29,11 @@ const BuyNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       e.preventDefault();
       setIsLoading(true);
       const { id, placer, price } =
-        item.asks.find((ask) => ask.name === option)?.options[0] ?? {};
+        item?.asks.find((ask) => ask.name === option)?.options[0] ?? {};
       await addTransaction("buy", {
         item: {
-          id: item.id,
-          name: item.name,
+          id: item?.id ?? "",
+          name: item?.name ?? "",
         },
         option: {
           id: id ?? "",
@@ -47,10 +52,10 @@ const BuyNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   return (
     <>
-      <SEO title={item.name} />
+      <SEO title={item?.name} />
       <div className="pb-64 min-h-screen">
         <div className="p-5">
-          <h1 className="text-xl">{item.name}</h1>
+          <h1 className="text-xl">{item?.name}</h1>
           <p className="text mt-1">{option}</p>
         </div>
         <div className="p-5">
@@ -68,7 +73,7 @@ const BuyNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   readOnly
                   className="border rounded w-full p-2 text-right"
                   value={Number(
-                    item.asks.find((ask) => ask.name === option)?.options[0]
+                    item?.asks.find((ask) => ask.name === option)?.options[0]
                       .price
                   ).toLocaleString()}
                 />
@@ -85,7 +90,7 @@ const BuyNow: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         </div>
         <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
           <Link
-            href={{ pathname: `/item/${item.id}/bid`, query: { option } }}
+            href={{ pathname: `/item/${item?.id}/bid`, query: { option } }}
             replace
           >
             <a className="ml-5 h-full w-fit flex items-center">
@@ -121,10 +126,6 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  // const items: Item.ListItem[] = await (
-  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
-  // ).json();
-
   return {
     paths: [],
     fallback: "blocking",

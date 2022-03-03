@@ -4,36 +4,40 @@ import type {
   InferGetStaticPropsType,
   NextPage,
 } from "next";
+import useSWR from "swr";
 import Button from "../../../components/Button";
 import Naviagtion from "../../../components/Navigation";
 import SEO from "../../../components/SEO";
 import Swiper from "../../../components/Swiper";
 import { getItem } from "../../../services/api/firebase";
-import { formatPrice } from "../../../services/utils";
+import { formatPrice, getItemQuery } from "../../../services/utils";
 
 const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  item,
+  item: fallbackData,
 }) => {
+  const { data: item } = useSWR(fallbackData.id, getItemQuery, {
+    fallbackData,
+  });
   return (
     <>
-      <SEO title={item.name} image={item.images[0]} />
+      <SEO title={item?.name} image={item?.images[0]} />
       <div className="container mx-auto">
         <div className="mt-5 p-5">
           <div className="lg:grid grid-cols-2 gap-20">
-            <Swiper images={item.images} />
+            <Swiper images={item?.images ?? []} />
             <div>
-              <h1 className="font-semibold text-2xl mt-9">{item.name}</h1>
+              <h1 className="font-semibold text-2xl mt-9">{item?.name}</h1>
               <p className="text-lg mt-1">
-                {item.lowestAsk ? formatPrice(item.lowestAsk) : null}
+                {item?.lowestAsk ? formatPrice(item?.lowestAsk) : null}
                 <span className="text-xs"> (lowest ask)</span>
               </p>
               <div className="mt-4 flex gap-x-4 items-start">
                 <div className="w-full">
-                  <Button href={`/item/${item.id}/ask`} replace>
+                  <Button href={`/item/${item?.id}/ask`} replace>
                     Sell
                   </Button>
                   <div className="mt-3 mr-2">
-                    {item.bids
+                    {item?.bids
                       .filter((bid) => bid.options.length)
                       .slice(0, 3)
                       .map((bid) => (
@@ -47,11 +51,11 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   </div>
                 </div>
                 <div className="w-full">
-                  <Button mode="fill" href={`/item/${item.id}/bid`} replace>
+                  <Button mode="fill" href={`/item/${item?.id}/bid`} replace>
                     Buy
                   </Button>
                   <div className="mt-3 mr-2">
-                    {item.asks
+                    {item?.asks
                       .filter((ask) => ask.options.length)
                       .slice(0, 3)
                       .map((ask) => (
@@ -75,7 +79,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 <h4 className="font-semibold mt-4">Release Date</h4>
                 <p className="text-sm mt-1">2022/02/22</p>
                 <h4 className="font-semibold mt-4">Description</h4>
-                <p className="text-sm mt-1">{item.description}</p>
+                <p className="text-sm mt-1">{item?.description}</p>
               </div>
             </div>
           </div>
@@ -110,10 +114,6 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  // const items: Item.ListItem[] = await (
-  //   await fetch(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/item`)
-  // ).json();
-
   return {
     paths: [],
     fallback: "blocking",

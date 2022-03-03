@@ -10,13 +10,14 @@ import Button from "../../../../components/Button";
 import SEO from "../../../../components/SEO";
 import Trade from "../../../../components/Trade";
 import { getItem } from "../../../../services/api/firebase";
-
-const fetcher = (key: string) => getItem(key).then((res) => res.data);
+import { getItemQuery } from "../../../../services/utils";
 
 const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   item: fallbackData,
 }) => {
-  const { data: item } = useSWR(fallbackData.id, fetcher, { fallbackData });
+  const { data: item } = useSWR(fallbackData.id, getItemQuery, {
+    fallbackData,
+  });
 
   return (
     <>
