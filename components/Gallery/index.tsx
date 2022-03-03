@@ -29,7 +29,7 @@ const Gallery: FC<{
   };
 
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-4 lg:grid-cols-8 gap-2">
       {imageUrls.map((imageUrl, i) => (
         <div className="aspect-square relative" key={imageUrl}>
           <img
@@ -46,7 +46,7 @@ const Gallery: FC<{
       )}
       <label
         htmlFor={name}
-        className="rounded bg-black text-white flex items-center justify-center aspect-square"
+        className="rounded bg-[#ebebeb] text-white flex items-center justify-center aspect-square cursor-pointer"
       >
         <VscAdd className="text-3xl" />
         <input

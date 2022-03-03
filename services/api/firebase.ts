@@ -77,7 +77,7 @@ export const registerItem = async (_payload: Item.Register) => {
     id: itemId,
   };
   await setDoc<Item.Item>(
-    doc(db, "items", itemId) as DocumentReference<Item.Item>,
+    doc(db, "requests", itemId) as DocumentReference<Item.Item>,
     payload
   );
   return payload;
