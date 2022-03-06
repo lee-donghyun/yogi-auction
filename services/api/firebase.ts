@@ -177,7 +177,7 @@ export const placeOption = async (
           : _option
     ),
     lowestAsk:
-      option === "asks" && payload.option.price < item?.lowestAsk
+      option === "asks" && payload.option.price < (item?.lowestAsk ?? Infinity)
         ? payload.option.price
         : item?.lowestAsk,
   });

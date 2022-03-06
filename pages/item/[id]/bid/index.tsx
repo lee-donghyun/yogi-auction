@@ -23,9 +23,8 @@ const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     <>
       <SEO title={item?.name} />
       <div>
-        <Trade
-          options={item?.asks ?? []}
-          render={({ selected }) => (
+        <Trade options={item?.asks ?? []}>
+          {({ selected, isAvailable }) => (
             <>
               <Button
                 href={{
@@ -36,17 +35,22 @@ const Bid: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Place Bid
               </Button>
               <Button
-                href={{
-                  pathname: `/item/${item?.id}/buy`,
-                  query: { option: selected },
-                }}
+                href={
+                  isAvailable
+                    ? {
+                        pathname: `/item/${item?.id}/buy`,
+                        query: { option: selected },
+                      }
+                    : undefined
+                }
                 mode="fill"
+                theme={isAvailable ? undefined : "#ebebeb"}
               >
                 Buy Now
               </Button>
             </>
           )}
-        />
+        </Trade>
         <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
           <Link href={`/item/${item?.id}`} replace>
             <a className="ml-5 h-full w-fit flex items-center">

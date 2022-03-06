@@ -4,15 +4,16 @@ import { formatPrice } from "../../services/utils";
 
 type Props = {
   options: Item.Option[];
-  render: FC<{ selected: string }>;
+  children: FC<{ selected: string; isAvailable: boolean }>;
 };
 
-const Trade: FC<Props> = ({ options, render: Footer }) => {
+const Trade: FC<Props> = ({ options, children }) => {
   const { asPath } = useRouter();
   const [selected, setSelected] = useState(
     new URLSearchParams(asPath.split("?")[1]).get("option") ?? options[0].name
   );
-
+  const isAvailable = !!options.find((option) => option.name == selected)
+    ?.options.length;
   return (
     <div className="pb-36 min-h-screen">
       <div className="p-5">
@@ -26,7 +27,7 @@ const Trade: FC<Props> = ({ options, render: Footer }) => {
         ))}
       </div>
       <div className="mt-10 flex gap-x-4 fixed inset-x-0 bottom-[calc(56px+env(safe-area-inset-bottom))] p-5 bg-white border-t">
-        <Footer selected={selected} />
+        {children({ selected, isAvailable })}
       </div>
     </div>
   );

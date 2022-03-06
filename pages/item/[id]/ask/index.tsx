@@ -23,9 +23,8 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     <>
       <SEO title={item?.name} />
       <div>
-        <Trade
-          options={item?.bids ?? []}
-          render={({ selected }) => (
+        <Trade options={item?.bids ?? []}>
+          {({ selected, isAvailable }) => (
             <>
               <Button
                 href={{
@@ -37,17 +36,22 @@ const Ask: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                 Place Ask
               </Button>
               <Button
-                href={{
-                  pathname: `/item/${item?.id}/sell`,
-                  query: { option: selected },
-                }}
+                href={
+                  isAvailable
+                    ? {
+                        pathname: `/item/${item?.id}/sell`,
+                        query: { option: selected },
+                      }
+                    : undefined
+                }
                 mode="fill"
+                theme={isAvailable ? undefined : "#ebebeb"}
               >
                 Sell Now
               </Button>
             </>
           )}
-        />
+        </Trade>
         <div className="fixed inset-0 top-auto h-[calc(56px+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)]  bg-white border-t border-black">
           <Link href={`/item/${item?.id}`} replace>
             <a className="ml-5 h-full w-fit flex items-center">
