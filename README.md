@@ -19,7 +19,7 @@ next.js와 firebase를 사용해 구현한 사용자간 직접 거래 앱입니�
 
 
 ## 배포
-[https://yogi-auction.vercel.app](https://yogi-auction.shop)
+[https://yogi-auction.shop](https://yogi-auction.shop)
 vercel을 사용합니다. main 브랜치에 push하면 배포 됩니다.
 
 ## 로컬 서버
