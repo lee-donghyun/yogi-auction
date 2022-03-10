@@ -17,9 +17,6 @@ const Menu: NextPage = () => {
             <MenuItem href="/user" name="내 정보 수정" />
           </li>
           <li>
-            <MenuItem href="/item/register" name="상품 등록" />
-          </li>
-          <li>
             <MenuItem href="/transaction" name="진행 중 거래" />
           </li>
           <li>
@@ -27,6 +24,12 @@ const Menu: NextPage = () => {
           </li>
           <li>
             <MenuItem href="/asks" name="판매 입찰 내역" />
+          </li>
+          <li>
+            <MenuItem href="/register" name="상품 등록" />
+          </li>
+          <li>
+            <MenuItem href="/register/history" name="상품 등록 내역" />
           </li>
         </ul>
         {isAuthorized && (
