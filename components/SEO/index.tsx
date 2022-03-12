@@ -12,6 +12,7 @@ const SEO: FC<Props> = ({ title, image, description }) => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta name="description" content={description} />
       <link
         rel="apple-touch-icon"
         sizes="180x180"

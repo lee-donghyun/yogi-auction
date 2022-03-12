@@ -19,6 +19,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
         <title>요기옥션</title>
+        <meta
+          name="description"
+          content="합리적 거래를 위한 실시간 시장 가격"
+        />
       </Head>
       <div>
         <RecoilRoot>
