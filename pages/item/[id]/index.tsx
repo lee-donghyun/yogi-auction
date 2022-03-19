@@ -22,7 +22,7 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const onShare = () => {
     if (navigator.share) {
       navigator.share({
-        text: `합리적인 거래를 위한 실시간 시장가격`,
+        text: `${item?.name} - 요기옥션`,
         title: `${item?.name} - 요기옥션`,
         url: window.location.href,
       });
