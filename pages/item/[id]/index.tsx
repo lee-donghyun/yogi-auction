@@ -4,6 +4,7 @@ import type {
   InferGetStaticPropsType,
   NextPage,
 } from "next";
+import { BsShare } from "react-icons/bs";
 import useSWR from "swr";
 import Button from "../../../components/Button";
 import Naviagtion from "../../../components/Navigation";
@@ -18,13 +19,34 @@ const ItemDetail: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const { data: item } = useSWR(fallbackData.id, getItemQuery, {
     fallbackData,
   });
+  const onShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        text: `${item?.name} - 요기옥션`,
+        title: `${item?.name} - 요기옥션`,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard
+        .writeText(window.location.href)
+        .then(() => alert("링크가 복사되었습니다."));
+    }
+  };
   return (
     <>
       <SEO title={item?.name} image={item?.images[0]} />
       <div className="container mx-auto">
         <div className="mt-5 p-5">
           <div className="lg:grid grid-cols-2 gap-20">
-            <Swiper images={item?.images ?? []} />
+            <div className="relative">
+              <button
+                className="absolute right-0 top-0 z-10 p-2"
+                onClick={onShare}
+              >
+                <BsShare />
+              </button>
+              <Swiper images={item?.images ?? []} />
+            </div>
             <div>
               <h1 className="font-semibold text-2xl mt-9">{item?.name}</h1>
               <p className="text-lg mt-1">
