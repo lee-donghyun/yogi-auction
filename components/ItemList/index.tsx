@@ -28,7 +28,13 @@ const Item: FC<{ item: Item.Item }> = ({ item }) => {
               <img
                 src={item.images[0]}
                 alt={item.name}
-                className="p-3 aspect-[3/4] object-contain w-full"
+                className="p-3 aspect-[3/4] object-contain w-full opacity-0 duration-200"
+                onLoad={(e) => {
+                  (e.target as HTMLImageElement).setAttribute(
+                    "style",
+                    "opacity:1;"
+                  );
+                }}
               />
             </div>
             <div>
