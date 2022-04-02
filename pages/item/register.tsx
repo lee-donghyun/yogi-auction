@@ -74,7 +74,7 @@ const RegisterItem: NextPage = () => {
             </div>
             <div className="p-5 pb-0">
               <div>
-                <label htmlFor="name">상품 이미지</label>
+                <label htmlFor="images">상품 이미지</label>
               </div>
               <div className="mt-2">
                 <Gallery
