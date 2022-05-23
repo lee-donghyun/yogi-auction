@@ -13,13 +13,15 @@ const Auth: React.FC<Props> = ({ children, pages }) => {
   const [isAuthorized, load] = useAuth();
 
   useEffect(() => {
+    if(isAuthorized){
     const timer = setInterval(() => {
       load();
     }, ID_TOKEN_TIMEOUT * 1000);
     return () => {
       clearInterval(timer);
     };
-  }, []);
+    }
+  }, [isAuthorized]);
 
   if (isAuthorized === false && pages?.includes(router.pathname)) {
     router.replace({
